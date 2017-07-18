@@ -40,7 +40,7 @@ config['projects'].each do |project_name, project_config|
   end
 
   puts "Building page index from #{project_docs_dir}"
-  Dir.glob("#{project_docs_dir}/*.md") do |file|
+  Dir.glob("#{project_docs_dir}/*.md", File::FNM_CASEFOLD).sort.each do |file|
     filepath = file.gsub('projects/', '')
     filename = filepath.match(/(\d+)-(.*).md$/)
     header = filename[2].gsub('-', ' ').split.map(&:capitalize).join(' ')
