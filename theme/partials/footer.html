@@ -1,0 +1,73 @@
+<footer id="footer">
+    <div class="footer-container">
+        <div id="footer-widgets" class="clearfix">
+            <div class="footer-widget">
+                <div class="footer-widget-text">
+                    <h4 class="footer-title">We love monitoring</h4>
+                    <div class="textwidget">
+                        <a href="https://www.icinga.com/" alt="Icinga">
+                            <img class="footer-logo" alt="Icinga" src="{{ base_url }}/images/icinga-logo-white.png"">
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-widget">
+                <div class="footer-widget-text">
+                    <h4 class="footer-title">About us</h4>
+                    <div class="textwidget">
+                        <ul>
+                            <li class="footer-menu-item"><a href="https://www.icinga.com/about/team/">Team</a></li>
+                            <li class="footer-menu-item"><a href="https://www.icinga.com/about/customers/">Customers</a></li>
+                            <li class="footer-menu-item"><a href="https://www.icinga.com/partners/">Partners</a></li>
+                            <li class="footer-menu-item"><a href="https://www.icinga.com/shop/">Shop</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-widget">
+                <div class="footer-widget-text">
+                    <h4 class="footer-title">Connect</h4>
+                    <div class="textwidget">
+                        <ul>
+                            <li class="footer-menu-item"><a href="https://www.icinga.com/contact/">Contact us</a></li>
+                            <li class="footer-menu-item"><a href="https://www.icinga.com/events/">Events</a></li>
+                            <li class="footer-menu-item"><a href="https://www.icinga.com/about/get-involved/">Get involved</a></li>
+                            <li class="footer-menu-item"><a href="https://www.icinga.com/blog/">Blog</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-widget" style="margin-right:0px">
+                <div class="footer-widget-text">
+                    <h4 class="footer-title">Stay informed</h4>
+                    <div class="textwidget">
+                        <p></p>
+                        <div id="footer-signup">
+                            <form action="//icinga.us8.list-manage.com/subscribe/post?u=b791f3f89c2aa4ce5e741f273&#038;id=056e3dafee" method="post" target="_blank">
+                                <div><input id="stay-informed-email" name="EMAIL" required="" type="email" value="" placeholder="email address" />
+                                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input tabindex="-1" name="b_b791f3f89c2aa4ce5e741f273_056e3dafee" type="text" value="" /></div>
+                                    <div>
+                                        <input id="submit-button" class="button" name="subscribe" type="submit" value="Subscribe" />
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="footer-container clearfix">
+            <ul id="footer-social-icons">
+                {% set path = "ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" %}
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/{{ path }}">
+                {% for social in config.extra.social %}
+                <li class="footer-social-icon"><a href="{{ social.link }}" class="fa fa-{{ social.type }}"></a></li>
+                {% endfor %}
+            </ul>
+            <div id="footer-copyright">© {{ config.copyright }}</div>
+        </div>
+    </div>
+</footer>

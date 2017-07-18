@@ -1,0 +1,46 @@
+<div id="main-header">
+    <div id="main-header-container" class="clearfix">
+        <div id="main-header-logo-container">
+            <a href="https://www.icinga.com/" alt="Icinga">
+                <img alt="Icinga" src="{{ base_url }}/images/icinga-logo-white.png" id="logo">
+            </a>
+        </div>
+        <div id="main-header-navigation">
+            <nav id="top-menu-nav">
+                <button id="top-menu-hamburger" class="md-icon md-icon--menu" onclick="document.querySelector('#top-menu').style.display = (document.querySelector('#top-menu').style.display == 'block') ? 'none' : 'block'"></button>
+                <ul id="top-menu">
+                    {% for menuitem in config.extra.menu %}
+                      {% if menuitem.cssid %}
+                        <li class="top-menu-item" id="{{ menuitem.cssid }}"><a href="{{ menuitem.link }}">{{ menuitem.text }}</a></li>
+                      {% else %}
+                        <li class="top-menu-item"><a href="{{ menuitem.link }}">{{ menuitem.text }}</a></li>
+                      {% endif %}
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+<header class="md-header" data-md-component="header">
+    <nav class="md-header-nav md-grid">
+        <div class="md-flex">
+              <div class="md-flex__cell md-flex__cell--shrink">
+                <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch">
+                <span class="md-flex__ellipsis md-header-nav__title">
+                    {{ config.site_name }}
+                </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+                <a class="md-icon md-icon--search md-header-nav__button" href="{{ base_url }}/search.html"></a>
+                <form class="md-search__form" action="{{ base_url }}/search.html">
+                    <span role="status" aria-live="polite"></span>
+                    <input name="q" id="mkdocs-search-query" class="md-search__input" type="text" required placeholder="Search" autocomplete="off">
+                    <label class="md-icon md-search__icon" for="search"></label>
+                </form>
+            </div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,12 @@
+mkdocs.yml
+.bundle/
+vendor/
+Gemfile.lock
+html/
+projects/*
+!projects/
+!projects/index.md
+!projects/archive.md
+
+.idea/
+.DS_Store

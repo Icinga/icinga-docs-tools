@@ -1,0 +1,27 @@
+---
+projects_dir: 'projects'
+projects:
+  Icinga 2:
+    git: 'https://github.com/Icinga/icinga2.git'
+    ref: 'tags/v2.6.3'
+    latest: true
+    target: 'icinga2'
+    docs_dir: 'doc'
+  Icinga Web 2:
+    git: 'https://github.com/Icinga/icingaweb2.git'
+    ref: 'tags/v2.4.1'
+    latest: true
+    target: 'icingaweb2'
+    docs_dir: 'doc'
+  Director:
+    git: 'https://github.com/Icinga/icingaweb2-module-director.git'
+    ref: 'tags/v1.3.1'
+    latest: true
+    target: 'director'
+    docs_dir: 'doc'
+  Business Process:
+    git: 'https://github.com/Icinga/icingaweb2-module-businessprocess.git'
+    ref: 'tags/v2.1.0'
+    latest: true
+    target: 'businessprocess'
+    docs_dir: 'doc'

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block extrahead %}
+<script>var base_url = '{{ base_url }}';</script>
+<script data-main="{{ base_url }}/mkdocs/js/search.js" src="{{ base_url }}/mkdocs/js/require.js"></script>
+{% endblock %}
+
+{% block content %}
+<h1 id="search-documentation">Search Results</h1>
+
+<noscript>
+    <div class="admonition warning">
+        <p>
+            Please activate JavaScript to enable the search
+            functionality.
+        </p>
+    </div>
+</noscript>
+
+<div id="searchpage-form">
+    <form id="mobile-search-form" action="{{ base_url }}/search.html">
+        <span role="status" aria-live="polite"></span>
+        <input name="q" id="mkdocs-search-query" class="mobile-search-form-input" type="text" required placeholder="Search" autocomplete="off">
+    </form>
+</div>
+
+<div id="mkdocs-search-results">
+    <div id="search-loading">
+        <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+        <p>Searching ...</p>
+    </div>
+</div>
+
+{% endblock %}
