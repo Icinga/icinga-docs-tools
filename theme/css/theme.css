@@ -123,6 +123,16 @@
     font-family: "Open Sans"
 }
 
+/*
+.md-main__inner {
+    min-height: 100vh;
+}
+*/
+
+.md-sidebar--primary {
+    min-height: 60vh;
+}
+
 .md-content a {
     color: #0095BF;
 }
