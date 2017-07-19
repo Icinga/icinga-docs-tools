@@ -60,7 +60,7 @@ Clone this repository and install dependencies:
 ``` bash
 user@localhost ~/ $ git clone https://github.com/Icinga/icinga-docs-tools.git
 user@localhost ~/ $ cd icinga-docs-tools
-user@localhost ~/ $ bundle install
+user@localhost ~/ $ bundle install --path vendor
 user@localhost ~/ $ bundle exec build-docs.rb
 ```
 
