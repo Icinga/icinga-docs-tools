@@ -27,3 +27,17 @@ projects:
     target: 'businessprocess'
     docs_dir: 'doc'
     category: 'Modules'
+  Fileshipper:
+    git: 'https://github.com/Icinga/icingaweb2-module-fileshipper.git'
+    ref: 'tags/v1.0.0'
+    latest: true
+    target: 'fileshipper'
+    docs_dir: 'doc'
+    category: 'Modules'
+  vSphere:
+    git: 'https://github.com/Icinga/icingaweb2-module-vsphere.git'
+    ref: 'tags/v1.1.0'
+    latest: true
+    target: 'vsphere'
+    docs_dir: 'doc'
+    category: 'Modules'
