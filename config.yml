@@ -19,9 +19,11 @@ projects:
     latest: true
     target: 'director'
     docs_dir: 'doc'
+    category: 'Modules'
   Business Process:
     git: 'https://github.com/Icinga/icingaweb2-module-businessprocess.git'
     ref: 'tags/v2.1.0'
     latest: true
     target: 'businessprocess'
     docs_dir: 'doc'
+    category: 'Modules'

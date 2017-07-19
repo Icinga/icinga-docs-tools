@@ -20,6 +20,7 @@ This file defines generally for which projects documentation should be build. Al
 | `latest`       | If set to `true`, the project will be cloned into a `latest` directory. |
 | `target`       | Target directory within `projects_dir`                                  |
 | `docs_dir`     | Directory that includes the `*.md` files                                |
+| `category`     | If set, the projects will be displayed under this category              | 
 
 
 Example: 

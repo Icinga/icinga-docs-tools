@@ -5,6 +5,7 @@ require 'git'
 
 config = YAML::load_file('config.yml')
 mkdocs = YAML::load_file('mkdocs.template.yml')
+categories = {}
 
 config['projects'].each do |project_name, project_config|
   puts "== #{project_name}"
@@ -46,8 +47,19 @@ config['projects'].each do |project_name, project_config|
     header = filename[2].gsub('-', ' ').split.map(&:capitalize).join(' ')
     pages.push(header => filepath)
   end
-  mkdocs['pages'].push(project_name => pages)
 
+  if project_config['category']
+    categories[project_config['category']] = [] unless categories[project_config['category']]
+    categories[project_config['category']].push(project_name => pages)
+  else
+    mkdocs['pages'].push(project_name => pages)
+  end
+end
+
+if categories
+  categories.each do |cat, proj|
+    mkdocs['pages'].push(cat => proj)
+  end
 end
 
 mkdocs['extra']['append_pages'].each do |name, target|
