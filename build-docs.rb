@@ -21,24 +21,17 @@ config['projects'].each do |project_name, project_config|
   project_docs_dir = clone_target + '/' + project_config['docs_dir']
   pages = []
 
-  if File.directory?(clone_target)
-    puts 'Project already exists, cleaning up'
-    FileUtils.rm_rf(clone_target)
+  if !File.directory?(clone_target)
+    puts 'Cloning ...'
+    FileUtils.mkdir_p(project_dir)
+    repo = Git.clone(project_config['git'], clone_target)
+  else
+    repo = Git.open(clone_target)
   end
 
-  puts 'Cloning ...'
-  FileUtils.mkdir_p(project_dir)
-  repo = Git.clone(project_config['git'], clone_target)
-
-  puts "Switching to ref '#{project_config['ref']}'"
+  puts "Checkout ref '#{project_config['ref']}'"
   repo.branch(project_config['ref']).checkout
 
-  puts 'Cleaning up everything not related to docs'
-  Dir::foreach(clone_target) do |file|
-    next if(file == project_config['docs_dir'])
-    next if(file == '.' || file == '..')
-    FileUtils.rm_rf(clone_target + '/' + file)
-  end
 
   puts "Building page index from #{project_docs_dir}"
   Dir.glob("#{project_docs_dir}/*.md", File::FNM_CASEFOLD).sort.each do |file|
