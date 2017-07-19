@@ -14,6 +14,8 @@ config['projects'].each do |project_name, project_config|
 
   if project_config['latest'] == true
     clone_target = project_dir + '/latest'
+  elsif project_config['ref'] == 'master'
+    clone_target = project_dir + '/snapshot'
   else
     clone_target = project_dir + '/' + project_config['ref'].gsub('tags/', '')
   end
