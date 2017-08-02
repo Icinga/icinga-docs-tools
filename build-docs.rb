@@ -29,6 +29,7 @@ config['projects'].each do |project_name, project_config|
     repo = Git.clone(project_config['git'], clone_target)
   else
     repo = Git.open(clone_target)
+    repo.fetch()
   end
 
   puts "Checkout ref '#{project_config['ref']}'"
