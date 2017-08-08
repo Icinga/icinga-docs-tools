@@ -3,7 +3,7 @@ projects_dir: 'projects'
 projects:
   Icinga 2:
     git: 'https://github.com/Icinga/icinga2.git'
-    ref: 'tags/v2.7.0'
+    ref: 'support/2.7'
     latest: true
     target: 'icinga2'
     docs_dir: 'doc'
