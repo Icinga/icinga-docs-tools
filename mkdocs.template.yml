@@ -27,7 +27,7 @@ extra:
     - text: 'Blog'
       link: 'https://www.icinga.com/blog/'
     - text: 'Download'
-      link: 'https://www.icinga.com/downloads/'
+      link: 'https://www.icinga.com/download/'
       cssid: 'download-button'
   social:
     - type: 'facebook'
