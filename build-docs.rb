@@ -27,14 +27,15 @@ config['projects'].each do |project_name, project_config|
     puts 'Cloning ...'
     FileUtils.mkdir_p(project_dir)
     repo = Git.clone(project_config['git'], clone_target)
+    puts "Checkout ref '#{project_config['ref']}'"
+    repo.branch(project_config['ref']).checkout
   else
     repo = Git.open(clone_target)
     repo.fetch()
+    puts "Checkout ref '#{project_config['ref']}'"
+    repo.branch(project_config['ref']).checkout
+    repo.pull('origin', project_config['ref'])
   end
-
-  puts "Checkout ref '#{project_config['ref']}'"
-  repo.branch(project_config['ref']).checkout
-  repo.pull()
 
   puts "Building page index from #{project_docs_dir}"
   Dir.glob("#{project_docs_dir}/*.md", File::FNM_CASEFOLD).sort.each do |file|
