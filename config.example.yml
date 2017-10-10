@@ -7,4 +7,24 @@ projects:
     latest: true
     target: 'icingaweb2'
     docs_dir: 'doc'
-
+  Monitoring:
+    git: 'https://github.com/Icinga/icingaweb2.git'
+    ref: 'tags/v2.4.2'
+    latest: true
+    target: 'icingaweb2'
+    docs_dir: 'modules/monitoring/doc'
+    category: 'Built in Modules'
+  Doc:
+    git: 'https://github.com/Icinga/icingaweb2.git'
+    ref: 'tags/v2.4.2'
+    latest: true
+    target: 'icingaweb2'
+    docs_dir: 'modules/doc/doc'
+    category: 'Built in Modules'
+  Translation:
+    git: 'https://github.com/Icinga/icingaweb2.git'
+    ref: 'tags/v2.4.2'
+    latest: true
+    target: 'icingaweb2'
+    docs_dir: 'modules/translation/doc'
+    category: 'Built in Modules'
