@@ -1,18 +1,47 @@
 #!/usr/bin/env ruby
+require 'optparse'
 require 'fileutils'
 require 'yaml'
 require 'git'
 
-config = YAML::load_file('config.yml')
-mkdocs = YAML::load_file('mkdocs.template.yml')
+options = {}
+OptionParser.new { |opts|
+  opts.banner = "Usage: #{File.basename($0)} -c config.yml -t mkdocs.template.yml}"
+
+  options[:config] = 'config.yml'
+  opts.on('-f',
+          '--config FILENAME',
+          'Configuration file with project definition. Defaults to "config.yml"') do |config|
+    options[:config] = config
+  end
+
+  options[:template] = 'mkdocs.template.yml'
+  opts.on('-t',
+          '--template FILENAME',
+          'This file is used as template for the generated mkdocs.yaml. Defaults to "mkdocs.template.yml"') do |template|
+    options[:template] = template
+  end
+
+  opts.on_tail('-h', '--help', 'Show this message') do
+    puts opts
+    exit
+  end
+}.parse!
+
+
+config = YAML::load_file(options[:config])
+mkdocs = YAML::load_file(options[:template])
 categories = {}
+mkdocs['pages'] = []
 
 config['projects'].each do |project_name, project_config|
   puts "== #{project_name}"
 
+  mkdocs['site_name'] = project_name
+
   project_dir = config['projects_dir'] + '/' + project_config['target']
 
-  if project_config['latest'] == true
+  if project_config['latest']
     clone_target = project_dir + '/latest'
   elsif project_config['ref'] == 'master'
     clone_target = project_dir + '/snapshot'
@@ -34,13 +63,12 @@ config['projects'].each do |project_name, project_config|
     repo.fetch()
     puts "Checkout ref '#{project_config['ref']}'"
     repo.branch(project_config['ref']).checkout
-    repo.pull('origin', project_config['ref'])
   end
 
   puts "Building page index from #{project_docs_dir}"
   Dir.glob("#{project_docs_dir}/*.md", File::FNM_CASEFOLD).sort.each do |file|
     filepath = file.gsub('projects/', '')
-    filename = filepath.match(/(\d+)-(.*).md$/)
+    filename = filepath.match(/.*(\d+)-(.*).md$/)
     header = filename[2].gsub('-', ' ').split.map(&:capitalize).join(' ')
     pages.push(header => filepath)
   end
@@ -49,7 +77,11 @@ config['projects'].each do |project_name, project_config|
     categories[project_config['category']] = [] unless categories[project_config['category']]
     categories[project_config['category']].push(project_name => pages)
   else
-    mkdocs['pages'].push(project_name => pages)
+    # MKdocs allows only 'index.md' as homepage. This is a dirty workaround to use the first markdown file instead
+    FileUtils.ln_s("#{pages[0].values[0]}", 'projects/index.md', :force => true)
+    mkdocs['pages'].push('' => 'index.md')
+
+    mkdocs['pages'].push(*pages)
   end
 end
 
@@ -59,8 +91,10 @@ if categories
   end
 end
 
-mkdocs['extra']['append_pages'].each do |name, target|
-  mkdocs['pages'].push(name => target)
+if mkdocs['extra']['append_pages']
+  mkdocs['extra']['append_pages'].each do |name, target|
+    mkdocs['pages'].push(name => target)
+  end
 end
 
 File.write('mkdocs.yml', mkdocs.to_yaml)

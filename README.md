@@ -61,6 +61,18 @@ Clone this repository and install dependencies:
 user@localhost ~/ $ git clone https://github.com/Icinga/icinga-docs-tools.git
 user@localhost ~/ $ cd icinga-docs-tools
 user@localhost ~/ $ bundle install --path vendor
+```
+
+Create and configure configuration file:
+
+``` bash
+user@localhost ~/ $ cp config.example.yml config.yml
+user@localhost ~/ $ vim config.yml
+```
+
+Build documentation: 
+
+``` bash
 user@localhost ~/ $ bundle exec build-docs.rb
 ```
 

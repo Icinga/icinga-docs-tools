@@ -1,14 +1,9 @@
 ---
-site_name: Documentation
 theme: material
 theme_dir: theme
 docs_dir: projects
 site_dir: 'html'
-pages:
-- Introduction: index.md
 extra:
-  append_pages:
-    Archive: archive.md
   font:
     text: 'Open Sans:300,400,400i,600,700'
   menu:
