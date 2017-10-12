@@ -28,75 +28,88 @@ OptionParser.new { |opts|
   end
 }.parse!
 
-
-config = YAML::load_file(options[:config])
-mkdocs = YAML::load_file(options[:template])
-categories = {}
-mkdocs['pages'] = []
-
-config['projects'].each do |project_name, project_config|
-  puts "== #{project_name}"
-
-  mkdocs['site_name'] = project_name
-
-  project_dir = config['projects_dir'] + '/' + project_config['target']
-
-  if project_config['latest']
-    clone_target = project_dir + '/latest'
-  elsif project_config['ref'] == 'master'
-    clone_target = project_dir + '/snapshot'
-  else
-    clone_target = project_dir + '/' + project_config['ref'].gsub('tags/', '')
-  end
-
-  project_docs_dir = clone_target + '/' + project_config['docs_dir']
-  pages = []
-
+def clone_and_update_project(target, clone_target, git, ref)
   if !File.directory?(clone_target)
-    puts 'Cloning ...'
-    FileUtils.mkdir_p(project_dir)
-    repo = Git.clone(project_config['git'], clone_target)
-    puts "Checkout ref '#{project_config['ref']}'"
-    repo.branch(project_config['ref']).checkout
+    puts "Cloning to #{target} to #{clone_target} ..."
+    FileUtils.mkdir_p(clone_target)
+    repo = Git.clone(git, clone_target)
   else
     repo = Git.open(clone_target)
     repo.fetch()
-    puts "Checkout ref '#{project_config['ref']}'"
-    repo.branch(project_config['ref']).checkout
   end
 
-  puts "Building page index from #{project_docs_dir}"
-  Dir.glob("#{project_docs_dir}/*.md", File::FNM_CASEFOLD).sort.each do |file|
-    filepath = file.gsub('projects/', '')
+  puts "Checkout #{target} ref '#{ref}'"
+  repo.branch(ref).checkout
+end
+
+def build_page_index(full_docs_dir, project_docs_dir)
+  pages = []
+  puts "Building page index from #{full_docs_dir}"
+  Dir.glob("#{full_docs_dir}/*.md", File::FNM_CASEFOLD).sort.each do |file|
+    filepath = file.gsub(full_docs_dir + '/', project_docs_dir + '/')
     filename = filepath.match(/.*(\d+)-(.*).md$/)
-    header = filename[2].gsub('-', ' ').split.map(&:capitalize).join(' ')
-    pages.push(header => filepath)
+    if filename
+      header = filename[2].gsub('-', ' ').split.map(&:capitalize).join(' ') unless File.symlink?(filepath)
+    end
+    pages.push(header => filepath) if header
   end
 
-  if project_config['category']
-    categories[project_config['category']] = [] unless categories[project_config['category']]
-    categories[project_config['category']].push(project_name => pages)
-  else
-    # MKdocs allows only 'index.md' as homepage. This is a dirty workaround to use the first markdown file instead
-    FileUtils.ln_s("#{pages[0].values[0]}", 'projects/index.md', :force => true)
-    mkdocs['pages'].push('' => 'index.md')
+  return pages
+end
 
-    mkdocs['pages'].push(*pages)
+config = YAML::load_file(options[:config])
+mkdocs = YAML::load_file(options[:template])
+mkdocs['pages'] = []
+
+
+puts "== #{config['site_name']}"
+
+version = if config['project']['latest']
+            'latest'
+          elsif config['project']['ref'] == 'master'
+            'snapshot'
+          else
+            config['project']['ref'].gsub('tags/', '')
+          end
+
+source_dir = config['source_dir'] + '/' + config['project']['target']
+clone_target = source_dir + '/' + version
+full_docs_dir = clone_target + '/' + config['project']['docs_dir']
+
+clone_and_update_project(config['project']['target'], clone_target, config['project']['git'], config['project']['ref'])
+main_pages = build_page_index(full_docs_dir, config['project']['docs_dir'])
+
+# MKdocs allows only 'index.md' as homepage. This is a dirty workaround to use the first markdown file instead
+#FileUtils.ln_s("#{clone_target}/#{main_pages[0].values[0]}", "#{clone_target}/index.md", :force => true)
+index_file = "#{clone_target}/index.md"
+FileUtils.cp("#{clone_target}/#{main_pages[0].values[0]}", index_file)
+index_content = File.read(index_file)
+index_new_content = index_content.gsub(/\(\.\./, '(')
+File.open(index_file, "w") {|file| file.puts index_new_content }
+mkdocs['pages'].push('' => "index.md")
+
+if config['project']['subcategories']
+  subcategories = []
+  config['project']['subcategories'].each do |category, subprojects|
+    subproject_pages = []
+    subprojects.each do |project, config|
+      if config['git']
+        subproject_clone_target = clone_target + '/' + config['target']
+        clone_and_update_project(project, subproject_clone_target, config['git'], config['ref'])
+      end
+      pages = build_page_index(clone_target + '/' + config['docs_dir'], config['docs_dir'])
+
+      subproject_pages.push(project => pages)
+    end
+    subcategories.push(category => subproject_pages)
   end
 end
 
-if categories
-  categories.each do |cat, proj|
-    mkdocs['pages'].push(cat => proj)
-  end
-end
-
-if mkdocs['extra']['append_pages']
-  mkdocs['extra']['append_pages'].each do |name, target|
-    mkdocs['pages'].push(name => target)
-  end
-end
-
+mkdocs['site_name'] = config['site_name']
+mkdocs['docs_dir'] = clone_target
+mkdocs['site_dir'] = config['site_dir'] + '/' + config['project']['target'] + '/' + version
+mkdocs['pages'].push(*main_pages)
+mkdocs['pages'].push(*subcategories) if subcategories
 File.write('mkdocs.yml', mkdocs.to_yaml)
 
 %x( mkdocs build )

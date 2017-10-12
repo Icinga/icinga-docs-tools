@@ -196,10 +196,17 @@
 
 .md-sidebar--primary .md-nav__item {
     padding: 0px;
+    padding-left: 4.5rem;
 }
 
 .md-sidebar--primary .md-nav__item--nested li {
     padding: 0 1.2rem;
+}
+
+@media only screen and (min-width: 76.25em) {
+    .md-sidebar--secondary {
+        margin-left: 124rem;
+    }
 }
 
 .md-content a {

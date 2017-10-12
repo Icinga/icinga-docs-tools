@@ -1,1 +1,0 @@
-icinga2/latest/doc/01-about.md
