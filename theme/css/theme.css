@@ -138,6 +138,7 @@
     margin: auto;
     width: 80%;
     padding: 2px;
+    max-width: 1255px;
 }
 
 .md-breadcrump-innner ul {
@@ -154,8 +155,8 @@
     color: #0095bf;
     font-size: 16px;
     line-height: 16px;
-    margin: 0 5px;
-    padding: 5px 10px;
+    margin: 0px;
+    padding: 0px;
     font-family: "Open Sans";
 }
 
@@ -170,8 +171,8 @@
 }
 
 .md-breadcrump-seperator {
-    padding: 0px;
-    margin: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
     font-size: 16px;
     line-height: 16px;
     color: #666;
@@ -196,7 +197,6 @@
 
 .md-sidebar--primary .md-nav__item {
     padding: 0px;
-    padding-left: 4.5rem;
 }
 
 .md-sidebar--primary .md-nav__item--nested li {
