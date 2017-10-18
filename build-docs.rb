@@ -2,7 +2,7 @@
 require 'optparse'
 require 'fileutils'
 require 'yaml'
-require 'git'
+require 'rugged'
 
 options = {}
 OptionParser.new { |opts|
@@ -30,16 +30,14 @@ OptionParser.new { |opts|
 
 def clone_and_update_project(target, clone_target, git, ref)
   if !File.directory?(clone_target)
-    puts "Cloning to #{target} to #{clone_target} ..."
+    puts "Cloning to #{target}: #{ref} to #{clone_target} ..."
     FileUtils.mkdir_p(clone_target)
-    repo = Git.clone(git, clone_target)
+    Rugged::Repository.clone_at(git, clone_target, {:checkout_branch => ref})
   else
-    repo = Git.open(clone_target)
-    repo.fetch()
+    puts "Cleaning up #{clone_target}"
+    FileUtils::rm_rf(clone_target)
+    clone_and_update_project(target, clone_target, git, ref)
   end
-
-  puts "Checkout #{target} ref '#{ref}'"
-  repo.branch(ref).checkout
 end
 
 def build_page_index(full_docs_dir, project_docs_dir)

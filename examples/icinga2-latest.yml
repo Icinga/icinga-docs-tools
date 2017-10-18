@@ -4,7 +4,7 @@ source_dir: '/Users/bsheqa/git/github/icinga/icinga-docs-tools/www/source'
 site_dir: '/Users/bsheqa/git/github/icinga/icinga-docs-tools/www/html'
 project:
   git: 'https://github.com/Icinga/icinga2.git'
-  ref: 'support/v2.7'
+  ref: 'support/2.7'
   target: 'icinga2'
   docs_dir: 'doc'
   latest: true
