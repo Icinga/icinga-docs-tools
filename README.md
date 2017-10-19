@@ -1,43 +1,82 @@
 # Icinga Documentation
-This repository includes everything for building the documentation for all tools in the Icinga ecosystem.
+This repository includes scripts to build the documentation for all Icinga projects.
 
-The `build-docs.rb` script clones each configured project to the specified directory and switches to the specified
-branch. It searches for `*.md` files within the configured directory and creates documentation sections out of the found
-files. The ordering is defined by the file names. The capitalized name of each file is used as a title for this documentation
-section. The script will generate the `mkdocs.yml` 
+The `build-docs.rb` script clones the configured project to a certain directory and switches to the specified
+branch. It searches for `*.md` files within the configured directory and creates documentation sections out of them.
+The ordering is defined by the file names. The capitalized name of each file is used as a title for this documentation
+section. The generates the `mkdocs.yml` file. 
+
+## Usage
+``` bash
+Usage: build-docs.rb -c config.yml -t mkdocs.template.yml}
+    -f, --config FILENAME            Configuration file with project definition. Defaults to "config.yml"
+    -t, --template FILENAME          This file is used as template for the generated mkdocs.yaml. Defaults to "mkdocs.template.yml"
+    -h, --help                       Show this message
+```
 
 ## Configuration
 
 ### `config.yml`
-This file defines generally for which projects documentation should be build. All settings are required.
+This file defines generally for which project documentation should be build.
 
-| Option         | Description                                                             |
-| -------------  | ----------------------------------------------------------------------- |
-| `projects_dir` | Directory where all projects are stored                                 |
-| `projects`     | Array of projects                                                       |
-| `git`          | Git repository                                                          |
-| `ref`          | Branch or Tag to check out                                              |
-| `latest`       | If set to `true`, the project will be cloned into a `latest` directory. |
-| `target`       | Target directory within `projects_dir`                                  |
-| `docs_dir`     | Directory that includes the `*.md` files                                |
-| `category`     | If set, the projects will be displayed under this category              | 
 
+General settings:
+
+| Option        | Description                                                  |
+| ------------- | ------------------------------------------------------------ |
+| `site_name`   |  The `site_name` is displayed as title on the generated page |
+| `source_dir'` | Target directory to store the documentation source.          |
+| `site_dir`    | Target directory for generated html                          |
+| `project`     | General project settings                                     |
+
+
+Project settings:
+
+| Option           | Description                                                  |
+| --------------- | ------------------------------------------------------------ |
+| `git`           | Git repository to clone                                                                               |
+| `ref`           | Git branch or tag to checkout. For tags use `tags/v1.1.0` notation                                    |
+| `target`        | A unique name to define the target. This is added to `source_dir` and `site_dir`                      |
+| `docs_dir`      | Directory within the repository that includes documentation files. Eg. `doc`                          |
+| `latest`        | If set to `true`, this documentation will be marked as the latest. This is important for the URLs.    |
+| `subcategories` | A project may include one ore more sub categories. One sub category may have one or more sub projects |
+
+Subcategories are optional. They allow you to display a project documentation within another project documentation.
+We need this for Icinga Web 2 and Director.
 
 Example: 
 
 ``` yaml
-projects_dir: 'projects'
-projects:
-  Icinga 2:
-    git: 'https://github.com/Icinga/icinga2.git'
-    ref: 'tags/v2.6.3'
-    target: 'icinga2'
-    docs_dir: 'doc'
-  Icinga Web 2:
-    git: 'https://github.com/Icinga/icingaweb2.git'
-    ref: 'tags/v2.4.1'
-    target: 'icingaweb2'
-    docs_dir: 'doc'
+site_name: 'Icinga 2'
+source_dir: 'www/source'
+site_dir: 'www/html'
+project:
+  git: 'https://github.com/Icinga/icinga2.git'
+  ref: 'support/2.7'
+  target: 'icinga2'
+  docs_dir: 'doc'
+  latest: true
+```
+
+Example with subcategories:
+
+``` yaml
+site_name: 'Director'
+source_dir: 'www/source'
+site_dir: 'www/html'
+project:
+  git: 'https://github.com/Icinga/icingaweb2-module-director.git'
+  ref: 'support/1.4'
+  target: 'director'
+  docs_dir: 'doc'
+  latest: true
+  subcategories:
+    Modules:
+      PuppetDB:
+        git: 'https://github.com/Icinga/icingaweb2-module-puppetdb.git'
+        ref: 'master'
+        target: 'puppetdb'
+        docs_dir: 'puppetdb/doc'
 ```
 
 ### `mkdocs.template.yml`
