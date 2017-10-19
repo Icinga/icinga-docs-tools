@@ -1,7 +1,7 @@
 ---
 site_name: 'Icinga Web 2'
-source_dir: '/Users/bsheqa/git/github/icinga/icinga-docs-tools/www/source'
-site_dir: '/Users/bsheqa/git/github/icinga/icinga-docs-tools/www/html'
+source_dir: 'www/source'
+site_dir: 'www/html'
 project:
   git: 'https://github.com/Icinga/icingaweb2.git'
   ref: 'support/v2.4'

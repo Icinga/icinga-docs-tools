@@ -1,0 +1,10 @@
+---
+site_name: 'Business Process Module'
+source_dir: 'www/source'
+site_dir: 'www/html'
+project:
+  git: 'https://github.com/Icinga/icingaweb2-module-businessprocess.git'
+  ref: 'tags/v2.1.0'
+  target: 'businessprocess'
+  docs_dir: 'doc'
+  latest: true

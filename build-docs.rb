@@ -2,7 +2,6 @@
 require 'optparse'
 require 'fileutils'
 require 'yaml'
-require 'rugged'
 
 options = {}
 OptionParser.new { |opts|
@@ -29,10 +28,14 @@ OptionParser.new { |opts|
 }.parse!
 
 def clone_and_update_project(target, clone_target, git, ref)
+  @git_options = "-b #{ref}" if ref =~ /tags/
   if !File.directory?(clone_target)
-    puts "Cloning to #{target}: #{ref} to #{clone_target} ..."
+    puts "Cloning #{git} to #{clone_target} ..."
     FileUtils.mkdir_p(clone_target)
-    Rugged::Repository.clone_at(git, clone_target, {:checkout_branch => ref})
+    %x(git clone #{git} #{clone_target})
+
+    puts "Checking out #{ref}"
+    %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} checkout #{ref} #{@git_options})
   else
     puts "Cleaning up #{clone_target}"
     FileUtils::rm_rf(clone_target)

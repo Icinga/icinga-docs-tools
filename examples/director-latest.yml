@@ -1,7 +1,7 @@
 ---
 site_name: 'Director'
-source_dir: '/Users/bsheqa/git/github/icinga/icinga-docs-tools/www/source'
-site_dir: '/Users/bsheqa/git/github/icinga/icinga-docs-tools/www/html'
+source_dir: 'www/source'
+site_dir: 'www/html'
 project:
   git: 'https://github.com/Icinga/icingaweb2-module-director.git'
   ref: 'support/1.4'
