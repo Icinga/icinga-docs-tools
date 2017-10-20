@@ -4,24 +4,15 @@ source_dir: 'www/source'
 site_dir: 'www/html'
 project:
   git: 'https://github.com/Icinga/icingaweb2.git'
-  ref: 'support/v2.4'
+  ref: 'master'
   target: 'icingaweb2'
   docs_dir: 'doc'
   latest: true
   subcategories:
     Built in Modules:
       Monitoring:
-        git: 'https://github.com/Icinga/icingaweb2.git'
-        ref: 'support/v2.4'
-        target: 'icingaweb2'
         docs_dir: 'modules/monitoring/doc'
       Doc:
-        git: 'https://github.com/Icinga/icingaweb2.git'
-        ref: 'support/v2.4'
-        target: 'icingaweb2'
         docs_dir: 'modules/doc/doc'
       Translation:
-        git: 'https://github.com/Icinga/icingaweb2.git'
-        ref: 'support/v2.4'
-        target: 'icingaweb2'
         docs_dir: 'modules/translation/doc'
