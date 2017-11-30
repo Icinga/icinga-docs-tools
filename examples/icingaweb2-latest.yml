@@ -1,7 +1,7 @@
 ---
 site_name: 'Icinga Web 2'
-source_dir: 'www/source'
-site_dir: 'www/html'
+source_dir: 'www/docs/source'
+site_dir: 'www/docs/html'
 project:
   git: 'https://github.com/Icinga/icingaweb2.git'
   ref: 'master'
