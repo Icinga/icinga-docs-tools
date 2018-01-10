@@ -41,7 +41,7 @@ markdown_extensions:
   - admonition
   - codehilite(guess_lang=true)
   - toc(permalink=true)
-copyright: '2017 - Icinga Open Source Monitoring'
+copyright: '2018 - Icinga Open Source Monitoring'
 google_analytics:
   - 'UA-280659-15'
   - 'auto'
