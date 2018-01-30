@@ -1,0 +1,5 @@
+---
+events:
+  git: 'https://github.com/Icinga/events.git'
+  source_dir: 'www/docs/source'
+  categories: ['trainings', 'icingacamps', 'conferences', 'meetups']
