@@ -2,6 +2,7 @@
 require 'optparse'
 require 'fileutils'
 require 'yaml'
+require 'date'
 
 options = {}
 OptionParser.new { |opts|
@@ -27,7 +28,7 @@ OptionParser.new { |opts|
   end
 }.parse!
 
-def clone_and_update_project(target, clone_target, git, ref)
+def cleanup_and_clone(target, clone_target, git, ref)
   @git_options = "-b #{ref}" if ref =~ /tags/
   if !File.directory?(clone_target)
     puts "Cloning #{git} to #{clone_target} ..."
@@ -39,7 +40,7 @@ def clone_and_update_project(target, clone_target, git, ref)
   else
     puts "Cleaning up #{clone_target}"
     FileUtils::rm_rf(clone_target)
-    clone_and_update_project(target, clone_target, git, ref)
+    cleanup_and_clone(target, clone_target, git, ref)
   end
 end
 
@@ -58,45 +59,73 @@ def build_page_index(full_docs_dir, project_docs_dir)
   return pages
 end
 
-config = YAML::load_file(options[:config])
+def get_events(git, source_dir, categories)
+  events = []
+  event_categories = categories
+  clone_target = source_dir + '/events'
+  cleanup_and_clone('events', clone_target, git, 'master')
+  event_categories.each do |category|
+    category_events = YAML::load_file(clone_target + '/' + category + '.yml')
+    category_events_sorted = category_events.sort_by { |k| k['start_date'] }
+    events << category_events_sorted[0]
+  end
+
+  events_sorted = events.sort_by { |k| k['start_date']}
+
+  events_sorted.each do |k|
+    k['start_date'] = Date::ABBR_MONTHNAMES[k['start_date'].month]
+  end
+
+  return events_sorted
+end
+
+config = YAML::load_file('config.yml')
+project_config = YAML::load_file(options[:config])
 mkdocs = YAML::load_file(options[:template])
 mkdocs['pages'] = []
 
 
-puts "== #{config['site_name']}"
 
-version = if config['project']['latest']
+puts "== #{project_config['site_name']}"
+
+version = if project_config['project']['latest']
             'latest'
-          elsif config['project']['ref'] == 'master'
+          elsif project_config['project']['ref'] == 'master'
             'snapshot'
           else
-            config['project']['ref'].gsub('tags/', '')
+            project_config['project']['ref'].gsub('tags/', '')
           end
 
-source_dir = config['source_dir'] + '/' + config['project']['target']
+source_dir = project_config['source_dir'] + '/' + project_config['project']['target']
 clone_target = source_dir + '/' + version
-full_docs_dir = clone_target + '/' + config['project']['docs_dir']
+full_docs_dir = clone_target + '/' + project_config['project']['docs_dir']
 
-clone_and_update_project(config['project']['target'], clone_target, config['project']['git'], config['project']['ref'])
-main_pages = build_page_index(full_docs_dir, config['project']['docs_dir'])
+cleanup_and_clone(project_config['project']['target'],
+                  clone_target,
+                  project_config['project']['git'],
+                  project_config['project']['ref'])
+
+main_pages = build_page_index(full_docs_dir, project_config['project']['docs_dir'])
 
 # MKdocs allows only 'index.md' as homepage. This is a dirty workaround to use the first markdown file instead
 #FileUtils.ln_s("#{clone_target}/#{main_pages[0].values[0]}", "#{clone_target}/index.md", :force => true)
 index_file = "#{clone_target}/index.md"
 FileUtils.cp("#{clone_target}/#{main_pages[0].values[0]}", index_file)
 index_content = File.read(index_file)
-index_new_content = index_content.gsub(/\(((?!http)\S+(\.md|\.png)(\S+)?)\)/, "(#{config['project']['docs_dir']}/\\1)")
+index_new_content = index_content.gsub(/\(((?!http)\S+(\.md|\.png)(\S+)?)\)/,
+                                       "(#{project_config['project']['docs_dir']}/\\1)")
+
 File.open(index_file, "w") {|file| file.puts index_new_content }
 mkdocs['pages'].push('' => "index.md")
 
-if config['project']['subcategories']
+if project_config['project']['subcategories']
   subcategories = []
-  config['project']['subcategories'].each do |category, subprojects|
+  project_config['project']['subcategories'].each do |category, subprojects|
     subproject_pages = []
     subprojects.each do |project, config|
       if config['git']
         subproject_clone_target = clone_target + '/' + config['target']
-        clone_and_update_project(project, subproject_clone_target, config['git'], config['ref'])
+        cleanup_and_clone(project, subproject_clone_target, config['git'], config['ref'])
       end
       pages = build_page_index(clone_target + '/' + config['docs_dir'], config['docs_dir'])
 
@@ -106,11 +135,15 @@ if config['project']['subcategories']
   end
 end
 
-mkdocs['site_name'] = config['site_name']
+mkdocs['site_name'] = project_config['site_name']
 mkdocs['docs_dir'] = clone_target
-mkdocs['site_dir'] = config['site_dir'] + '/' + config['project']['target'] + '/' + version
+mkdocs['site_dir'] = project_config['site_dir'] + '/' + project_config['project']['target'] + '/' + version
 mkdocs['pages'].push(*main_pages)
 mkdocs['pages'].push(*subcategories) if subcategories
+mkdocs['extra']['events'] = get_events(config['events']['git'],
+                                       config['events']['source_dir'],
+                                       config['events']['categories'])
+
 File.write('mkdocs.yml', mkdocs.to_yaml)
 
 %x( mkdocs build )
