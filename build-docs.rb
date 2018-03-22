@@ -66,8 +66,10 @@ def get_events(git, source_dir, categories)
   cleanup_and_clone('events', clone_target, git, 'master')
   event_categories.each do |category|
     category_events = YAML::load_file(clone_target + '/' + category + '.yml')
-    category_events_sorted = category_events.sort_by { |k| k['date'] }
-    events << category_events_sorted[0]
+    if category_events
+      category_events_sorted = category_events.sort_by { |k| k['date'] }
+      events << category_events_sorted[0]
+    end
   end
 
   events_sorted = events.sort_by { |k| k['date']}
