@@ -1,12 +1,11 @@
 ---
-theme:
-    name: material
-    custom_dir: theme
-    font:
-      text: 'Open Sans:300,400,400i,600,700'
+theme: material
+theme_dir: theme
 docs_dir: projects
 site_dir: 'html'
 extra:
+  font:
+    text: 'Open Sans:300,400,400i,600,700'
   menu:
     - text: 'Products'
       link: 'https://www.icinga.com/products/'
@@ -36,6 +35,7 @@ extra:
       link: 'https://www.icinga.com/feed/'
 extra_css:
 - css/theme.css
+extra_javascript: []
 markdown_extensions:
   - smarty
   - admonition

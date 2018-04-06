@@ -319,10 +319,6 @@
     top: 1rem;
 }
 
-.md-search__form {
-    width: 40rem;
-}
-
 #mkdocs-search-results {
     font-family: "Open Sans"
 }
