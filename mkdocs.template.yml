@@ -2,8 +2,6 @@
 theme:
     name: material
     custom_dir: theme
-    search_index_only: false
-    include_search_page: true
     font:
       text: 'Open Sans:300,400,400i,600,700'
 docs_dir: projects
