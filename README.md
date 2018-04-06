@@ -87,11 +87,11 @@ here.
 To see a live preview of the documentation you can run a development server that will refresh automatically on changes.
 
 
-Install `mkdocs` and the `material` theme:
+Install `mkdocs` and the `material` theme in version `1.12.2`:
 
 ``` bash
-user@localhost ~/ $ pip install mkdocs
-user@localhost ~/ $ pip install mkdocs-material
+user@localhost ~/ $ pip install mkdocs==0.16.3
+user@localhost ~/ $ pip install mkdocs-material==1.12.2
 ```
 
 Clone this repository and install dependencies:
