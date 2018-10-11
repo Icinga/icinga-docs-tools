@@ -29,8 +29,6 @@ extra:
       link: 'https://www.facebook.com/icinga'
     - type: 'twitter'
       link: 'https://twitter.com/icinga'
-    - type: 'google-plus'
-      link: 'http://plus.google.com/+icinga'
     - type: 'feed'
       link: 'https://www.icinga.com/feed/'
 extra_css:
