@@ -8,21 +8,21 @@ extra:
     text: 'Open Sans:300,400,400i,600,700'
   menu:
     - text: 'Products'
-      link: 'https://www.icinga.com/products/'
+      link: 'https://icinga.com/products/'
     - text: 'Partners'
-      link: 'https://www.icinga.com/partners/'
+      link: 'https://icinga.com/partners/'
     - text: 'Training'
-      link: 'https://www.icinga.com/training/'
+      link: 'https://icinga.com/training/'
     - text: 'Events'
-      link: 'https://www.icinga.com/events/'
+      link: 'https://icinga.com/events/'
     - text: 'Docs'
-      link: 'https://www.icinga.com/docs/'
+      link: 'https://icinga.com/docs/'
     - text: 'Support'
-      link: 'https://www.icinga.com/support/'
+      link: 'https://icinga.com/support/'
     - text: 'Blog'
-      link: 'https://www.icinga.com/blog/'
+      link: 'https://icinga.com/blog/'
     - text: 'Download'
-      link: 'https://www.icinga.com/download/'
+      link: 'https://icinga.com/download/'
       cssid: 'download-button'
   social:
     - type: 'facebook'
@@ -30,7 +30,7 @@ extra:
     - type: 'twitter'
       link: 'https://twitter.com/icinga'
     - type: 'feed'
-      link: 'https://www.icinga.com/feed/'
+      link: 'https://icinga.com/feed/'
 extra_css:
 - css/theme.css
 extra_javascript: []
