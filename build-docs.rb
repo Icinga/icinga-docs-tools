@@ -114,8 +114,8 @@ main_pages = build_page_index(full_docs_dir, project_config['project']['docs_dir
 index_file = "#{clone_target}/index.md"
 FileUtils.cp("#{clone_target}/#{main_pages[0].values[0]}", index_file)
 index_content = File.read(index_file)
-index_new_content = index_content.gsub(/\(((?!http)\S+(\.md|\.png)(\S+)?)\)/,
-                                       "(#{project_config['project']['docs_dir']}/\\1)")
+index_new_content = index_content.gsub(/\(((?!http)\S+(\.md|\.png)(\w)?)/,
+                                       "(#{project_config['project']['docs_dir']}/\\1")
 
 File.open(index_file, "w") {|file| file.puts index_new_content }
 mkdocs['pages'].push('' => "index.md")
