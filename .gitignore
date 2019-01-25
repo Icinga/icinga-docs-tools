@@ -5,6 +5,7 @@ Gemfile.lock
 html/
 projects/*
 !projects/
+www/
 
 .idea/
 .DS_Store

@@ -1,73 +1,129 @@
-<footer id="footer">
-    <div class="footer-container">
-        <div id="footer-widgets" class="clearfix">
-            <div class="footer-widget">
-                <div class="footer-widget-text">
-                    <h4 class="footer-title">We love monitoring</h4>
-                    <div class="textwidget">
-                        <a href="https://icinga.com/" alt="Icinga">
-                            <img class="footer-logo" alt="Icinga" src="{{ base_url }}/images/icinga-logo-white.png"">
-                        </a>
-                    </div>
+{% import "partials/language.html" as lang with context %}
+<footer class="md-footer">
+    {% if page.previous_page or page.next_page %}
+    <div class="md-footer-nav">
+        <nav class="md-footer-nav__inner md-grid">
+            {% if page.previous_page %}
+            <a href="{{ page.previous_page.url | url }}" title="{{ page.previous_page.title }}" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+                <div class="md-flex__cell md-flex__cell--shrink">
+                    <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
                 </div>
-            </div>
-            <div class="footer-widget">
-                <div class="footer-widget-text">
-                    <h4 class="footer-title">Resources</h4>
-                    <div class="textwidget">
-                        <ul>
-                            <li class="footer-menu-item"><a href="https://icinga.com/shop">Shop</a></li>
-                            <li class="footer-menu-item"><a href="https://icinga.com/about/team/">Team</a></li>
-                            <li class="footer-menu-item"><a href="https://icinga.com/community">Community</a></li>
-                            <li class="footer-menu-item"><a href="https://icinga.com/partners">Find a Partner</a></li>
-                        </ul>
-                    </div>
+                <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  {{ lang.t("footer.previous") }}
+                </span>
+                {{ page.previous_page.title }}
+              </span>
                 </div>
-            </div>
-            <div class="footer-widget">
-                <div class="footer-widget-text">
-                    <h4 class="footer-title">About</h4>
-                    <div class="textwidget">
-                        <ul>
-                            <li class="footer-menu-item"><a href="https://icinga.com/customers">Customers</a></li>
-                            <li class="footer-menu-item"><a href="https://icinga.com/about/imprint">Imprint</a></li>
-                            <li class="footer-menu-item"><a href="https://icinga.com/about/privacy-policy">Privacy Policy</a></li>
-                            <li class="footer-menu-item"><a href="https://icinga.com/contact">Contact us</a></li>
-                        </ul>
-                    </div>
+            </a>
+            {% endif %}
+            {% if page.next_page %}
+            <a href="{{ page.next_page.url | url }}" title="{{ page.next_page.title }}" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+                <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  {{ lang.t("footer.next") }}
+                </span>
+                {{ page.next_page.title }}
+              </span>
                 </div>
+                <div class="md-flex__cell md-flex__cell--shrink">
+                    <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+                </div>
+            </a>
+            {% endif %}
+        </nav>
+    </div>
+    {% endif %}
+
+    <div class="md-footer-meta md-typeset icinga-footer">
+        <div class="md-footer-meta__inner md-grid ">
+            <div id="icinga-footer-menu">
+                <ul>
+                    <li><strong>Icinga</strong></li>
+                    <li><a href="https://icinga.com/products">Products</a></li>
+                    <li><a href="https://icinga.com/blog">Blog</a></li>
+                    <li><a href="https://icinga.com/partners">Partners</a></li>
+                    <li><a href="https://icinga.com/customers">Customers</a></li>
+                    <li><a href="https://icinga.com/company">Company</a></li>
+                </ul>
+                <ul>
+                    <li><strong>Events</strong></li>
+                    <li><a href="https://icinga.com/events">IcingaCamp</a></li>
+                    <li><a href="https://icinga.com/events/meetups">Meetups</a></li>
+                </ul>
+                <ul>
+                    <li><strong>Learn</strong></li>
+                    <li><a href="https://icinga.com/docs">Docs</a></li>
+                    <li><a href="https://icinga.com/trainings">Trainings</a></li>
+                </ul>
+                <ul id="icinga-footer-menu-last">
+                    <li><strong>Support</strong></li>
+                    <li><a href="https://icinga.com/support">Subscription</a></li>
+                    <li><a href="https://community.icinga.com">Community Forum</a></li>
+                </ul>
             </div>
-            <div class="footer-widget" style="margin-right:0px">
-                <div class="footer-widget-text">
-                    <h4 class="footer-title">Stay informed</h4>
-                    <div class="textwidget">
-                        <p></p>
-                        <div id="footer-signup">
-                            <form action="//icinga.us8.list-manage.com/subscribe/post?u=b791f3f89c2aa4ce5e741f273&#038;id=056e3dafee" method="post" target="_blank">
-                                <div><input id="stay-informed-email" name="EMAIL" required="" type="email" value="" placeholder="email address" />
-                                    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-                                    <div style="position: absolute; left: -5000px;" aria-hidden="true"><input tabindex="-1" name="b_b791f3f89c2aa4ce5e741f273_056e3dafee" type="text" value="" /></div>
-                                    <div>
-                                        <input id="submit-button" class="button" name="subscribe" type="submit" value="Subscribe" />
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
+            <div class="md-footer-copyright" style="width:100%">
+                {% if config.copyright %}
+                <div class="md-footer-copyright__highlight icinga-footer">
+                    <ul id="icinga-footer-legal">
+                        <li>{{ config.copyright }}</li>
+                        <li><a href="https://icinga.com/about/imprint">Imprint</a></li>
+                        <li><a href="https://icinga.com/about/privacy-policy">Privacy Policy</a></li>
+                        <li><a href="https://icinga.com/about/terms-of-use">Terms of use</a></li>
+                    </ul>
+                </div>
+                {% endif %}
+                <div class="md-footer-copyright__highlight icinga-footer">
+
                 </div>
             </div>
         </div>
     </div>
-    <div class="footer-bottom">
-        <div class="footer-container clearfix">
-            <ul id="footer-social-icons">
-                {% set path = "ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" %}
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/{{ path }}">
-                {% for social in config.extra.social %}
-                <li class="footer-social-icon"><a href="{{ social.link }}" class="fa fa-{{ social.type }}"></a></li>
-                {% endfor %}
-            </ul>
-            <div id="footer-copyright">© {{ config.copyright }}</div>
+
+    <!--
+    <div id="icinga-footer">
+        <div id="icinga-footer-container">
+            <div id="icinga-footer-menu">
+                <ul>
+                    <li><strong>Icinga</strong></li>
+                    <li><a href="#">Product</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Partners</a></li>
+                    <li><a href="#">Customers</a></li>
+                    <li><a href="#">Company</a></li>
+                </ul>
+                <ul>
+                    <li><strong>Events</strong></li>
+                    <li><a href="#">IcingaConf</a></li>
+                    <li><a href="#">IcingaCamp</a></li>
+                    <li><a href="#">Meetups</a></li>
+                </ul>
+                <ul>
+                    <li><strong>Learn</strong></li>
+                    <li><a href="#">Docs</a></li>
+                    <li><a href="#">Trainings</a></li>
+                </ul>
+                <ul id="icinga-footer-menu-last">
+                    <li><strong>Support</strong></li>
+                    <li><a href="#">Subscription</a></li>
+                    <li><a href="#">Community Forum</a></li>
+                </ul>
+            </div>
+            <div id="icinga-footer-bottom">
+                <div id="icinga-footer-copyright">
+                    {{ config.copyright }}
+                </div>
+                <div id="icinga-footer-legal">
+                    <ul>
+                        <li>Imprint</li>
+                        <li>Privacy Policy</li>
+                        <li>Terms of Use</li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
+    -->
 </footer>

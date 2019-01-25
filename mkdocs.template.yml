@@ -1,29 +1,31 @@
 ---
-theme: material
-theme_dir: theme
+theme:
+  name: 'material'
+  custom_dir: 'theme'
+  palette:
+    primary: 'white'
+    accent: 'blue'
+  font: false
 docs_dir: projects
 site_dir: 'html'
 extra:
-  font:
-    text: 'Open Sans:300,400,400i,600,700'
+extra:
+  search:
+    language: 'en'
   menu:
     - text: 'Products'
       link: 'https://icinga.com/products/'
-    - text: 'Partners'
-      link: 'https://icinga.com/partners/'
-    - text: 'Training'
-      link: 'https://icinga.com/training/'
-    - text: 'Events'
-      link: 'https://icinga.com/events/'
-    - text: 'Docs'
-      link: 'https://icinga.com/docs/'
     - text: 'Support'
       link: 'https://icinga.com/support/'
+    - text: 'Events'
+      link: 'https://icinga.com/events/'
+    - text: 'Learn'
+      link: 'https://icinga.com/learn/'
+      cssid: 'icinga-menu-main-active'
+    - text: 'Community'
+      link: 'https://icinga.com/community/'
     - text: 'Blog'
       link: 'https://icinga.com/blog/'
-    - text: 'Download'
-      link: 'https://icinga.com/download/'
-      cssid: 'download-button'
   social:
     - type: 'facebook'
       link: 'https://www.facebook.com/icinga'
@@ -32,14 +34,14 @@ extra:
     - type: 'feed'
       link: 'https://icinga.com/feed/'
 extra_css:
-- css/theme.css
+  - './css/theme.css'
 extra_javascript: []
 markdown_extensions:
   - smarty
   - admonition
   - codehilite(guess_lang=true)
   - toc(permalink=true)
-copyright: '2019 - Icinga Open Source Monitoring'
+copyright: '© 2009 - 2019 Icinga GmbH'
 google_analytics:
   - 'UA-280659-15'
   - 'auto'

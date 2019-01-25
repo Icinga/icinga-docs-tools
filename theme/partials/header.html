@@ -1,75 +1,86 @@
-<div id="main-header">
-    <div id="main-header-container" class="clearfix">
-        <div id="main-header-logo-container">
+<div id="icinga-menu" class="clearfix">
+    <div id="icinga-menu-container">
+        <div id="icinga-menu-logo">
             <a href="https://icinga.com/" alt="Icinga">
-                <img alt="Icinga" src="{{ base_url }}/images/icinga-logo-white.png" id="logo">
+                <img alt="Icinga" src="{{ base_url }}/images/icinga-logo-white.png">
             </a>
         </div>
-        <div id="main-header-navigation">
-            <nav id="top-menu-nav">
-                <button id="top-menu-hamburger" class="md-icon md-icon--menu" onclick="document.querySelector('#top-menu').style.display = (document.querySelector('#top-menu').style.display == 'block') ? 'none' : 'block'"></button>
-                <ul id="top-menu">
+
+        <div id="icinga-menu-main">
+            <nav>
+                <button  onclick="document.querySelector('#top-menu').style.display = (document.querySelector('#top-menu').style.display == 'block') ? 'none' : 'block'"></button>
+                <ul>
                     {% for menuitem in config.extra.menu %}
-                      {% if menuitem.cssid %}
-                        <li class="top-menu-item" id="{{ menuitem.cssid }}"><a href="{{ menuitem.link }}">{{ menuitem.text }}</a></li>
-                      {% else %}
-                        <li class="top-menu-item"><a href="{{ menuitem.link }}">{{ menuitem.text }}</a></li>
-                      {% endif %}
+                    {% if menuitem.cssid %}
+                    <li class="icinga-menu-main-entry" id="{{ menuitem.cssid }}"><a href="{{ menuitem.link }}">{{ menuitem.text }}</a></li>
+                    {% else %}
+                    <li><a href="{{ menuitem.link }}">{{ menuitem.text }}</a></li>
+                    {% endif %}
                     {% endfor %}
+                </ul>
+            </nav>
+        </div>
+
+        <div id="icinga-menu-secondary">
+            <nav>
+                <ul>
+                    <li id="icinga-menu-download">Download</li>
+                    <li id="icinga-menu-contact">Contact</li>
                 </ul>
             </nav>
         </div>
     </div>
 </div>
 
-<header class="md-header" data-md-component="header">
+<header class="md-header" data-md-component="header" style="position:relative;">
+
+
+
     <nav class="md-header-nav md-grid">
         <div class="md-flex">
-              <div class="md-flex__cell md-flex__cell--shrink">
-                <label class="md-icon md-icon--menu md-header-nav__button" for="drawer"></label>
-            </div>
-            <div class="md-flex__cell md-flex__cell--stretch">
-                <span class="md-flex__ellipsis md-header-nav__title">
-                    {{ config.site_name }}
-                </span>
+            <div class="md-flex__cell md-flex__cell--shrink">
+                <a href="{{ config.site_url | default(nav.homepage.url, true) | url }}" title="{{ config.site_name }}" class="md-header-nav__button md-logo">
+                    {% if config.theme.logo.icon %}
+                    <i class="md-icon">{{ config.theme.logo.icon }}</i>
+                    {% else %}
+                    <img src="{{ config.theme.logo | url }}" width="24" height="24">
+                    {% endif %}
+                </a>
             </div>
             <div class="md-flex__cell md-flex__cell--shrink">
-                <a class="md-icon md-icon--search md-header-nav__button" href="{{ base_url }}/search.html"></a>
-                <form class="md-search__form" action="{{ base_url }}/search.html">
-                    <span role="status" aria-live="polite"></span>
-                    <input name="q" id="mkdocs-search-query" class="md-search__input" type="text" required placeholder="Search" autocomplete="off">
-                    <label class="md-icon md-search__icon" for="search"></label>
-                </form>
+                <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
             </div>
+            <div class="md-flex__cell md-flex__cell--stretch">
+                <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+                    {% block site_name %}
+                    {% if config.site_name == page.title %}
+                    {{ config.site_name }}
+                    {% else %}
+                    <span class="md-header-nav__topic">
+                {{ config.site_name }}
+              </span>
+                    <span class="md-header-nav__topic">
+                {{ page.title }}
+              </span>
+                    {% endif %}
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+                {% block search_box %}
+                {% if "search" in config["plugins"] %}
+                <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+                {% include "partials/search.html" %}
+                {% endif %}
+                {% endblock %}
+            </div>
+            {% if config.repo_url %}
+            <div class="md-flex__cell md-flex__cell--shrink">
+                <div class="md-header-nav__source">
+                    {% include "partials/source.html" %}
+                </div>
+            </div>
+            {% endif %}
         </div>
     </nav>
 </header>
-
-<div class="md-breadcrump-main">
-    <div class="md-breadcrump-inner">
-        <ul id="breadcrump-list">
-            <li><a href="https://icinga.com/docs">Documentation</a></li>
-            <li>
-                <span class="md-breadcrump-seperator">/</span>
-                <a href="{{ base_url }}">{{ config.site_name }}</a>
-            </li>
-        </ul>
-    </div>
-</div>
-
-<div class="md-events">
-    <div class="md-events-inner">
-        <div id="events-header" class="clearfix">
-            <span>Upcoming Events</span>
-
-        </div>
-        <ul id="events-list">
-            {% for event in config.extra.events %}
-            {% if event.name %}
-            <li class="event-item"><a href="{{ event.registration_link }}"><span class="event-date">{{ event.date }}</span> <h3>{{ event.name }}</h3> <span class="event-city">{{ event.city }}</span></a></li>
-            {% endif %}
-            {% endfor %}
-            <li class="event-item" id="event-more-link"><a href="https://icinga.com/events/">Show more</a></li>
-        </ul>
-    </div>
-</div>
