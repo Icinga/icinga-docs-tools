@@ -23,7 +23,7 @@ body{
 }
 
 #icinga-menu-logo {
-    width: 100%;
+    width: 20%;
     height: 100%;
     position: absolute;
 }
@@ -35,7 +35,7 @@ body{
 }
 
 #icinga-menu-main {
-    padding-left: 185px;
+    margin-left: 185px;
     color: rgba(255,255,255,0.89);
     position: absolute;
 }
