@@ -157,6 +157,10 @@ body{
     color: #777;
 }
 
+.md-footer {
+    margin-top: 7rem;
+}
+
 @media screen and (max-width:65em) {
     #icinga-menu {
         display: none;
