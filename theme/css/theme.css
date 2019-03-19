@@ -102,6 +102,10 @@ body{
     border-radius: 4px;
 }
 
+.md-sidebar--secondary {
+    padding-bottom: 1rem;
+}
+
 .icinga-footer{
     background: #f7f7f7;
     color: #777;
