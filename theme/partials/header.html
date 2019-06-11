@@ -83,3 +83,20 @@
         </div>
     </nav>
 </header>
+
+<div class="md-events">
+    <div class="md-events-inner">
+        <div id="events-header" class="clearfix">
+            <span>Upcoming Events</span>
+
+        </div>
+        <ul id="events-list">
+            {% for event in config.extra.events %}
+            {% if event.name %}
+            <li class="event-item"><a href="{{ event.registration_link }}"><span class="event-date">{{ event.date }}</span> <h3>{{ event.name }}</h3> <span class="event-city">{{ event.city }}</span></a></li>
+            {% endif %}
+            {% endfor %}
+            <li class="event-item" id="event-more-link"><a href="https://icinga.com/events/">Show more</a></li>
+        </ul>
+    </div>
+</div>
