@@ -68,7 +68,14 @@ def get_events(git, source_dir, categories)
     category_events = YAML::load_file(clone_target + '/' + category + '.yml')
     if category_events
       category_events_sorted = category_events.sort_by { |k| k['date'] }
-      events << category_events_sorted[0]
+      category_events_sorted.each do |event|
+        if event['date'] > Date.today
+          events << event
+          break
+        else
+          next
+        end
+      end
     end
   end
 
