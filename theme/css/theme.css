@@ -102,6 +102,17 @@ body{
     border-radius: 4px;
 }
 
+#icinga-menu-icingaconf {
+    background-color: #ae1c28;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: 15px;
+    border-radius: 4px;
+}
+
+
 .md-sidebar--secondary {
     padding-bottom: 10rem;
 }
