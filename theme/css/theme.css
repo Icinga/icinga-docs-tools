@@ -89,29 +89,33 @@ body{
 }
 
 #icinga-menu-download {
-    padding-right: 20px;
-    padding-top: 2px;
-}
-
-#icinga-menu-contact {
     background-color: #23cb5b;
     padding-top: 2px;
     padding-bottom: 2px;
     padding-right: 15px;
     padding-left: 15px;
-    border-radius: 4px;
+    border: 1px solid #23cb5b;
+    border-radius: .25em;
 }
 
 #icinga-menu-icingaconf {
-    background-color: #ae1c28;
     padding-top: 2px;
     padding-bottom: 2px;
     padding-right: 15px;
     padding-left: 15px;
     margin-right: 15px;
-    border-radius: 4px;
+    border: 1px solid #ffffff;
+    border-radius: .25em;
+    transition: all .4s ease-in-out;
 }
 
+#icinga-menu-icingaconf a {
+}
+
+#icinga-menu-icingaconf:hover {
+    color: #0D536B;
+    background-color: #ffffff;
+}
 
 .md-sidebar--secondary {
     padding-bottom: 10rem;
