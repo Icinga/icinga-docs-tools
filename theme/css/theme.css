@@ -98,7 +98,7 @@ body{
     border-radius: .25em;
 }
 
-#icinga-menu-icingaconf {
+#icinga-menu-contact {
     padding-top: 2px;
     padding-bottom: 2px;
     padding-right: 15px;
@@ -109,10 +109,7 @@ body{
     transition: all .4s ease-in-out;
 }
 
-#icinga-menu-icingaconf a {
-}
-
-#icinga-menu-icingaconf:hover {
+#icinga-menu-contact:hover {
     color: #0D536B;
     background-color: #ffffff;
 }
