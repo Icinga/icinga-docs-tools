@@ -39,10 +39,10 @@ Project settings:
 | `target`        | A unique name to define the target. This is added to `source_dir` and `site_dir`                      |
 | `docs_dir`      | Directory within the repository that includes documentation files. Eg. `doc`                          |
 | `latest`        | If set to `true`, this documentation will be marked as the latest. This is important for the URLs.    |
-| `subcategories` | A project may include one ore more sub categories. One sub category may have one or more sub projects |
+| `subprojects`   | A project may include one ore more sub-projects.                                                      |
 
-Subcategories are optional. They allow you to display a project documentation within another project documentation.
-We need this for Icinga Web 2 and Director.
+Subprojects are optional. They allow you to display a project documentation within another project documentation.
+We need this for Icinga Web 2, Icinga Director and other projects where we summarise multiple repositories into one documentation.
 
 Example: 
 
@@ -58,7 +58,7 @@ project:
   latest: true
 ```
 
-Example with subcategories:
+Example with subprojects:
 
 ``` yaml
 site_name: 'Director'
@@ -70,13 +70,12 @@ project:
   target: 'director'
   docs_dir: 'doc'
   latest: true
-  subcategories:
-    Modules:
-      PuppetDB:
-        git: 'https://github.com/Icinga/icingaweb2-module-puppetdb.git'
-        ref: 'master'
-        target: 'puppetdb'
-        docs_dir: 'puppetdb/doc'
+  subprojects:
+    PuppetDB:
+      git: 'https://github.com/Icinga/icingaweb2-module-puppetdb.git'
+      ref: 'master'
+      target: 'puppetdb'
+      docs_dir: 'puppetdb/doc'
 ```
 
 ### `mkdocs.template.yml`
@@ -87,12 +86,6 @@ here.
 To see a live preview of the documentation you can run a development server that will refresh automatically on changes.
 
 
-Install `mkdocs` and the `material` theme in version `1.12.2`:
-
-``` bash
-user@localhost ~/ $ pip install mkdocs==0.16.3
-user@localhost ~/ $ pip install mkdocs-material==1.12.2
-```
 
 Clone this repository and install dependencies:
 
@@ -104,21 +97,16 @@ user@localhost ~/ $ bundle install --path vendor
 
 Create and configure configuration file:
 
-``` bash
-user@localhost ~/ $ cp config.example.yml config.yml
-user@localhost ~/ $ vim config.yml
-```
-
 Build documentation: 
 
 ``` bash
-user@localhost ~/ $ bundle exec build-docs.rb
+user@localhost ~/ $ bundle exec build-docs.rb -f examples/businessprocess-latest.yml
 ```
 
 Run server: 
 
 ``` bash
-user@localhost ~/ $ mkdocs serve
+docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material:6.1.0
 ```
 
 You should be able to access the documentation now in your browser by calling the address https://localhost:8000
