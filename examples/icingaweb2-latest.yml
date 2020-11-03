@@ -1,18 +1,17 @@
 ---
 site_name: 'Icinga Web 2'
-source_dir: 'www/docs/source'
-site_dir: 'www/docs/html'
+source_dir: '/var/www/docs/source'
+site_dir: '/var/www/docs/html'
 project:
   git: 'https://github.com/Icinga/icingaweb2.git'
   ref: 'master'
-  target: 'icingaweb2'
+  target: 'icinga-web-2'
   docs_dir: 'doc'
   latest: true
-  subcategories:
-    Built in Modules:
-      Monitoring:
-        docs_dir: 'modules/monitoring/doc'
-      Doc:
-        docs_dir: 'modules/doc/doc'
-      Translation:
-        docs_dir: 'modules/translation/doc'
+  subprojects:
+    Monitoring:
+      docs_dir: 'modules/monitoring/doc'
+    Doc:
+      docs_dir: 'modules/doc/doc'
+    Translation:
+      docs_dir: 'modules/translation/doc'

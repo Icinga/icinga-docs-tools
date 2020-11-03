@@ -1,0 +1,41 @@
+---
+site_name: 'Icinga for Windows'
+source_dir: '/var/www/docs/source'
+site_dir: '/var/www/docs/html'
+project:
+  git: 'https://github.com/Icinga/icinga-powershell-framework.git'
+  ref: 'support/1.2'
+  target: 'icinga-for-windows'
+  docs_dir: 'doc'
+  latest: true
+  subprojects:
+    Kickstart:
+      git: 'https://github.com/Icinga/icinga-powershell-kickstart.git'
+      ref: 'master'
+      target: 'kickstart'
+      docs_dir: 'kickstart/doc'
+    Basic Plugins:
+      git: 'https://github.com/Icinga/icinga-powershell-plugins.git'
+      ref: 'support/1.2'
+      target: 'plugins'
+      docs_dir: 'plugins/doc'
+    MSSQL Plugins:
+      git: 'https://github.com/Icinga/icinga-powershell-mssql.git'
+      ref: 'support/1.0'
+      target: 'mssql'
+      docs_dir: 'mssql/doc'
+    Service:
+      git: 'https://github.com/Icinga/icinga-powershell-service.git'
+      ref: 'master'
+      target: 'service'
+      docs_dir: 'service/doc'
+    Inventory:
+      git: 'https://github.com/Icinga/icinga-powershell-inventory.git'
+      ref: 'support/1.0'
+      target: 'inventory'
+      docs_dir: 'inventory/doc'
+    REST API:
+      git: 'https://github.com/Icinga/icinga-powershell-restapi.git'
+      ref: 'support/1.0'
+      target: 'restapi'
+      docs_dir: 'restapi/doc'

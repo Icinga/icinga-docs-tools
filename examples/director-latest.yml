@@ -1,17 +1,31 @@
 ---
-site_name: 'Director'
-source_dir: 'www/source'
-site_dir: 'www/html'
+site_name: 'Icinga Director'
+source_dir: '/var/www/docs/source'
+site_dir: '/var/www/docs/html'
 project:
   git: 'https://github.com/Icinga/icingaweb2-module-director.git'
-  ref: 'support/1.4'
-  target: 'director'
+  ref: 'support/1.7'
+  target: 'icinga-director'
   docs_dir: 'doc'
   latest: true
-  subcategories:
-    Modules:
-      PuppetDB:
-        git: 'https://github.com/Icinga/icingaweb2-module-puppetdb.git'
-        ref: 'master'
-        target: 'puppetdb'
-        docs_dir: 'puppetdb/doc'
+  subprojects:
+    PuppetDB Import:
+      git: 'https://github.com/Icinga/icingaweb2-module-puppetdb.git'
+      ref: 'tags/v1.0.0'
+      target: 'puppetdb'
+      docs_dir: 'puppetdb/doc'
+    File Import:
+      git: 'https://github.com/Icinga/icingaweb2-module-fileshipper.git'
+      ref: 'tags/v1.1.0'
+      target: 'fileshipper'
+      docs_dir: 'fileshipper/doc'
+    vSphere Import:
+      git: 'https://github.com/Icinga/icingaweb2-module-vsphere.git'
+      ref: 'tags/v1.1.0'
+      target: 'vsphere'
+      docs_dir: 'vsphere/doc'
+    AWS Import:
+      git: 'https://github.com/Icinga/icingaweb2-module-aws.git'
+      ref: 'tags/v1.0.0'
+      target: 'AWS'
+      docs_dir: 'AWS/doc'

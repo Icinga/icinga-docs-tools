@@ -1,10 +1,10 @@
 ---
 site_name: 'Icinga 2'
-source_dir: 'www/source'
-site_dir: 'www/html'
+source_dir: '/var/www/docs/source'
+site_dir: '/var/www/docs/html'
 project:
   git: 'https://github.com/Icinga/icinga2.git'
-  ref: 'support/2.7'
-  target: 'icinga2'
+  ref: 'support/2.12'
+  target: 'icinga-2'
   docs_dir: 'doc'
   latest: true
