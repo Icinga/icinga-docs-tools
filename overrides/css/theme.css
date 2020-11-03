@@ -1,0 +1,103 @@
+:root {
+  --md-primary-fg-color: #06062C;
+  --md-accent-fg-color: #0095bf;
+}
+
+:root > * {
+  --md-footer-bg-color: #06062C;
+  --md-typeset-a-color: #0095bf;
+}
+
+@font-face {
+    font-family: "Oxygen";
+    src: url("../fonts/Oxygen-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Oxygen";
+    src: url("../fonts/Oxygen-Bold.ttf");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: "Oxygen";
+    src: url("../fonts/Oxygen-Light.ttf");
+    font-weight: lighter;
+}
+
+@font-face {
+    font-family: "Oxygen-Mono";
+    src: url("../fonts/OxygenMono-Regular.ttf");
+    font-weight: lighter;
+}
+
+body, input {
+  font-family: "Oxygen", -apple-system, Helvetica, Arial, sans-serif;
+}
+
+code, pre, kbd {
+  font-family: "Oxygen-Mono", -apple-system, Helvetica, Arial, sans-serif;
+}
+
+.md-header-nav__title {
+  padding: 0 0;
+}
+
+.md-search__input {
+  background-color: #404D72;
+}
+
+.icinga-header {
+  height: 2rem;
+}
+
+.icinga-logo img {
+  height: 1.7rem;
+  float: left;
+}
+
+@media only screen and (max-width: 900px) {
+  .icinga-menu-wrapper {
+    display: none;
+  }
+}
+
+.icinga-menu-wrapper {
+  float: right;
+  padding-bottom: 2rem;
+  margin-right: 2.8rem;
+  overflow: auto;
+}
+
+.icinga-menu li {
+  float: left;
+  list-style-type: none;
+  font-size: 16px;
+  font-weight: bold;
+  padding-right: 22px;
+  margin-top: -0.5em;
+}
+
+.icinga-menu-entry a {
+  color: #fff;
+}
+
+.icinga-menu-entry a:hover {
+  color: #fff;
+  opacity: .7;
+  transition: all .4s ease-in-out;
+}
+
+
+.icinga-menu-entry:last-child a {
+  border: 1px solid #fff;
+  padding: 8px;
+}
+
+.icinga-menu-entry:last-child a:hover {
+  background-color: #fff;
+  color: #06062C;
+  opacity: .7;
+  transition: all .4s ease-in-out;
+}
+

@@ -1,41 +1,34 @@
 ---
 theme:
   name: 'material'
-  custom_dir: 'theme'
-  palette:
-    primary: 'white'
-    accent: 'blue'
+  custom_dir: 'overrides'
   font: false
-docs_dir: projects
+  icon:
+    repo: fontawesome/brands/github
+    logo: fontawesome/solid/book
+  features:
+    - navigation.instant
 site_dir: 'html'
 extra:
-extra:
-  search:
-    language: 'en'
-  menu:
-    - text: 'Products'
-      link: 'https://icinga.com/products/'
-    - text: 'Support'
-      link: 'https://icinga.com/support/'
-    - text: 'Events'
-      link: 'https://icinga.com/events/'
-    - text: 'Learn'
-      link: 'https://icinga.com/learn/'
-      cssid: 'icinga-menu-main-active'
-    - text: 'Community'
-      link: 'https://icinga.com/community/'
-    - text: 'Blog'
-      link: 'https://icinga.com/blog/'
   social:
-    - type: 'facebook'
-      link: 'https://www.facebook.com/icinga'
-    - type: 'twitter'
+    - icon: 'fontawesome/brands/twitter'
       link: 'https://twitter.com/icinga'
-    - type: 'feed'
-      link: 'https://icinga.com/feed/'
-extra_css:
-  - './css/theme.css'
+      name: 'Icinga on Twitter'
+    - icon: 'fontawesome/brands/facebook'
+      link: 'https://www.facebook.com/icinga'
+      name: 'Icinga on Facebook'
+    - icon: 'fontawesome/brands/youtube'
+      link: 'https://www.youtube.com/icinga'
+      name: 'Icinga on YouTube'
+    - icon: 'fontawesome/brands/linkedin'
+      link: 'https://www.linkedin.com/company/icinga'
+      name: 'Icinga on LinkedIn'
+plugins:
+  - search:
+      lang: en
 extra_javascript: []
+extra_css:
+  - css/theme.css
 markdown_extensions:
   - smarty
   - admonition
@@ -47,3 +40,5 @@ copyright: '© 2009 - 2020 Icinga GmbH'
 google_analytics:
   - 'UA-280659-15'
   - 'auto'
+repo_name: 'View on GitHub'
+edit_uri: ''

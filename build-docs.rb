@@ -91,7 +91,7 @@ end
 config = YAML::load_file('config.yml')
 project_config = YAML::load_file(options[:config])
 mkdocs = YAML::load_file(options[:template])
-mkdocs['pages'] = []
+mkdocs['nav'] = []
 
 
 
@@ -125,34 +125,31 @@ index_new_content = index_content.gsub(/\(((?!http)\S+(\.md|\.png)(\w)?)/,
                                        "(#{project_config['project']['docs_dir']}/\\1")
 
 File.open(index_file, "w") {|file| file.puts index_new_content }
-mkdocs['pages'].push('' => "index.md")
+mkdocs['nav'].push('' => "index.md")
 
-if project_config['project']['subcategories']
-  subcategories = []
-  project_config['project']['subcategories'].each do |category, subprojects|
-    subproject_pages = []
-    subprojects.each do |project, config|
-      if config['git']
-        subproject_clone_target = clone_target + '/' + config['target']
-        cleanup_and_clone(project, subproject_clone_target, config['git'], config['ref'])
-      end
-      pages = build_page_index(clone_target + '/' + config['docs_dir'], config['docs_dir'])
+if project_config['project']['subprojects']
+  subproject_navigation = []
 
-      subproject_pages.push(project => pages)
+  project_config['project']['subprojects'].each do |subproject|
+
+    if subproject[1]['git']
+      subproject_clone_target = clone_target + '/' + subproject[1]['target']
+      cleanup_and_clone(subproject[1], subproject_clone_target, subproject[1]['git'], subproject[1]['ref'])
     end
-    subcategories.push(category => subproject_pages)
+
+    subproject_navigation.push(subproject[0] => build_page_index(clone_target + '/' + subproject[1]['docs_dir'], subproject[1]['docs_dir']))
   end
 end
 
 mkdocs['site_name'] = project_config['site_name']
 mkdocs['docs_dir'] = clone_target
 mkdocs['site_dir'] = project_config['site_dir'] + '/' + project_config['project']['target'] + '/' + version
-mkdocs['pages'].push(*main_pages)
-mkdocs['pages'].push(*subcategories) if subcategories
-mkdocs['extra']['events'] = get_events(config['events']['git'],
-                                       config['events']['source_dir'],
-                                       config['events']['categories'])
+mkdocs['repo_url'] = project_config['project']['git'].gsub('.git', '').downcase
+mkdocs['nav'].push(*main_pages)
+mkdocs['nav'].push(*subproject_navigation) if subproject_navigation
+#mkdocs['extra']['events'] = get_events(config['events']['git'],
+#                                       config['events']['source_dir'],
+#                                       config['events']['categories'])
 
 File.write('mkdocs.yml', mkdocs.to_yaml)
-
-%x( mkdocs build )
+%x(mkdocs build)
