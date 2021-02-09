@@ -103,6 +103,7 @@ version = if project_config['project']['latest']
             'snapshot'
           else
             project_config['project']['ref'].gsub('tags/', '')
+            project_config['project']['ref'].gsub('support/', '')
           end
 
 source_dir = project_config['source_dir'] + '/' + project_config['project']['target']
