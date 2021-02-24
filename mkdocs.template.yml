@@ -36,7 +36,7 @@ markdown_extensions:
       guess_lang: true
   - toc:
       permalink: true
-copyright: '© 2009 - 2020 Icinga GmbH'
+copyright: '© 2009 - 2021 Icinga GmbH'
 google_analytics:
   - 'UA-280659-15'
   - 'auto'
