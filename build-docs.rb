@@ -47,13 +47,30 @@ end
 def build_page_index(full_docs_dir, project_docs_dir)
   pages = []
   puts "Building page index from #{full_docs_dir}"
-  Dir.glob("#{full_docs_dir}/*.md", File::FNM_CASEFOLD).sort.each do |file|
+
+  Dir.glob("#{full_docs_dir}/**", File::FNM_CASEFOLD).sort.each do |file|
+    next if !file.match(/.*(\d+)-(.*)$/)
+
     filepath = file.gsub(full_docs_dir + '/', project_docs_dir + '/')
-    filename = filepath.match(/.*(\d+)-(.*).md$/)
-    if filename
-      header = filename[2].gsub('-', ' ').split.map(&:capitalize).join(' ') unless File.symlink?(filepath)
+    filename = filepath.match(/.*(\d+)-(.*)$/)
+
+    if(File.directory?("#{file}"))
+      subdirectory = []
+      nav_item = filename[2].gsub('-', ' ').split.map(&:capitalize).join(' ') unless File.symlink?(filepath)
+  
+      Dir.glob("#{file}/*.md", File::FNM_CASEFOLD).sort.each do |subfile|
+        subfile_path = subfile.gsub(full_docs_dir + '/', project_docs_dir + '/')
+        subfile_name = subfile.match(/.*(\d+)-(.*)$/)
+  
+        header = subfile_name[2].gsub('-', ' ').split.map(&:capitalize).join(' ').gsub('.md', '') unless File.symlink?(subfile)
+        subdirectory.push(header => subfile_path) if header
+      end
+  
+      pages.push(nav_item => subdirectory) if nav_item
+    else  
+      header = filename[2].gsub('-', ' ').split.map(&:capitalize).join(' ').gsub('.md', '') unless File.symlink?(filepath)
+      pages.push(header => filepath) if header
     end
-    pages.push(header => filepath) if header
   end
 
   return pages

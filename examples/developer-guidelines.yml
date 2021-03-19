@@ -1,0 +1,9 @@
+site_name: 'Developer Guidelines'
+source_dir: '/var/www/docs/source'
+site_dir: '/var/www/docs/html'
+project:
+  git: 'https://github.com/Icinga/developer-guidelines.git'
+  ref: 'directories'
+  target: 'developer-guidelines'
+  docs_dir: 'doc'
+  latest: true
