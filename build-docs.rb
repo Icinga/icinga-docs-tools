@@ -55,7 +55,7 @@ def titleize(string)
   title = title.gsub(/(-|_)/, ' ')
 
   # Uppercase only first letter of each word, ignore stopwords
-  stopwords = ['and', 'or', 'to', 'by', 'on', 'with', 'is', 'at', 'of']
+  stopwords = ['and', 'or', 'to', 'by', 'on', 'with', 'is', 'at', 'of', 'from']
   title = title.split.map { |word|
     if stopwords.include?(word)
       word
