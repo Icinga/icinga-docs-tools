@@ -44,6 +44,29 @@ def cleanup_and_clone(target, clone_target, git, ref)
   end
 end
 
+def titleize(string)
+  # Remove .md
+  title = string.gsub('.md', '')
+
+  # Remove numbering on the front
+  title = title.gsub(/^\d+-/, '')
+
+  # Remove dashes and underscores
+  title = title.gsub(/(-|_)/, ' ')
+
+  # Uppercase only first letter of each word, ignore stopwords
+  stopwords = ['and', 'or', 'to', 'by', 'on', 'with', 'is', 'at', 'of']
+  title = title.split.map { |word|
+    if stopwords.include?(word)
+      word
+    else
+      word[0].upcase + word[1..-1]
+    end
+  }.join(" ")
+
+  return title
+end
+
 def build_page_index(full_docs_dir, project_docs_dir)
   pages = []
   puts "Building page index from #{full_docs_dir}"
@@ -56,19 +79,19 @@ def build_page_index(full_docs_dir, project_docs_dir)
 
     if(File.directory?("#{file}"))
       subdirectory = []
-      nav_item = filename[2].gsub('-', ' ').split.map(&:capitalize).join(' ') unless File.symlink?(filepath)
+      nav_item = titleize(filename[2]) unless File.symlink?(filepath)
   
       Dir.glob("#{file}/*.md", File::FNM_CASEFOLD).sort.each do |subfile|
         subfile_path = subfile.gsub(full_docs_dir + '/', project_docs_dir + '/')
         subfile_name = subfile.match(/.*(\d+)-(.*)$/)
   
-        header = subfile_name[2].gsub('-', ' ').split.map(&:capitalize).join(' ').gsub('.md', '') unless File.symlink?(subfile)
+        header = titleize(subfile_name[2]) unless File.symlink?(subfile)
         subdirectory.push(header => subfile_path) if header
       end
   
       pages.push(nav_item => subdirectory) if nav_item
     else  
-      header = filename[2].gsub('-', ' ').split.map(&:capitalize).join(' ').gsub('.md', '') unless File.symlink?(filepath)
+      header = titleize(filename[2]) unless File.symlink?(filepath)
       pages.push(header => filepath) if header
     end
   end
@@ -133,7 +156,6 @@ cleanup_and_clone(project_config['project']['target'],
                   project_config['project']['ref'])
 
 main_pages = build_page_index(full_docs_dir, project_config['project']['docs_dir'])
-
 # MKdocs allows only 'index.md' as homepage. This is a dirty workaround to use the first markdown file instead
 #FileUtils.ln_s("#{clone_target}/#{main_pages[0].values[0]}", "#{clone_target}/index.md", :force => true)
 index_file = "#{clone_target}/index.md"
