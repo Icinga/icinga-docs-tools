@@ -22,6 +22,13 @@ OptionParser.new { |opts|
     options[:template] = template
   end
 
+  options[:skip_clone] = false
+  opts.on('-s',
+          '--skip-clone',
+          'Do not update the repository. This option only works if the repo was already cloned once.') do |skip|
+    options[:skip_clone] = true
+  end
+
   opts.on_tail('-h', '--help', 'Show this message') do
     puts opts
     exit
@@ -103,7 +110,7 @@ def get_events(git, source_dir, categories)
   events = []
   event_categories = categories
   clone_target = source_dir + '/events'
-  cleanup_and_clone('events', clone_target, git, 'master')
+  #cleanup_and_clone('events', clone_target, git, 'master')
   event_categories.each do |category|
     category_events = YAML::load_file(clone_target + '/' + category + '.yml')
     if category_events
@@ -150,10 +157,12 @@ source_dir = project_config['source_dir'] + '/' + project_config['project']['tar
 clone_target = source_dir + '/' + version
 full_docs_dir = clone_target + '/' + project_config['project']['docs_dir']
 
-cleanup_and_clone(project_config['project']['target'],
-                  clone_target,
-                  project_config['project']['git'],
-                  project_config['project']['ref'])
+if !options[:skip_clone]
+  cleanup_and_clone(project_config['project']['target'],
+                    clone_target,
+                    project_config['project']['git'],
+                    project_config['project']['ref'])
+end
 
 main_pages = build_page_index(full_docs_dir, project_config['project']['docs_dir'])
 # MKdocs allows only 'index.md' as homepage. This is a dirty workaround to use the first markdown file instead
