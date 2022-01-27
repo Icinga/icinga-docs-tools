@@ -82,18 +82,57 @@ def build_page_index(full_docs_dir, project_docs_dir)
     next if !file.match(/.*(\d+)-(.*)$/)
 
     filepath = file.gsub(full_docs_dir + '/', project_docs_dir + '/')
-    filename = filepath.match(/.*(\d+)-(.*)$/)
+    filename = filepath.match(/.*?(\d+)-(.*?)(\.d)?$/)
 
     if(File.directory?("#{file}"))
       subdirectory = []
       nav_item = titleize(filename[2]) unless File.symlink?(filepath)
+      is_template_dir = !filename[3].nil?
   
       Dir.glob("#{file}/*.md", File::FNM_CASEFOLD).sort.each do |subfile|
         subfile_path = subfile.gsub(full_docs_dir + '/', project_docs_dir + '/')
         subfile_name = subfile.match(/.*(\d+)-(.*)$/)
+
+        if(is_template_dir)
+          %x(./parse_template.py -D icingaDocs true #{full_docs_dir} #{subfile_path.gsub(/^doc\//, '')})
+
+          content = File.read(subfile)
+          # Adjust self references
+          content = content.gsub(/\[(.*)\]\(#{filename[1]}-#{Regexp.quote(filename[2])}(.*)\)/, '[\1](\2)')
+          # Adjust external references
+          content = content.gsub(/\[(.*)\]\((?!http|#)(.*)\)/, '[\1](../\2)')
+          File.write(subfile, content)
+
+          # Adjust path, the directory will be renamed soon
+          subdir_name = File.basename(file)
+          subfile_path = subfile_path.gsub(subdir_name, subdir_name.gsub(/\.md.d$/, ''))
+        end
   
         header = titleize(subfile_name[2]) unless File.symlink?(subfile)
         subdirectory.push(header => subfile_path) if header
+      end
+
+      if(is_template_dir)
+        template_path = filepath.gsub(/\.d$/, '')
+        if(pages.include?(nav_item => template_path))
+          pages.delete_at(pages.find_index(nav_item => template_path))
+        end
+
+        # Rename template directory to mimic template references
+        newTemplateDirPath = file.gsub(/\.md.d$/, '')
+        File.rename(file, newTemplateDirPath)
+
+        # Attempt to create a index file
+        index_content = %x(./parse_template.py -o - -D index true #{full_docs_dir} #{template_path.gsub(/^doc\//, '')})
+        if(!index_content.empty?)
+          # Adjust self references
+          index_content = index_content.gsub(/\[(.*)\]\(#{filename[1]}-#{Regexp.quote(filename[2])}(.*)\)/, '[\1](\2)')
+          # Adjust external references
+          index_content = index_content.gsub(/\[(.*)\]\((?!http|#)(.*)\)/, '[\1](../\2)')
+
+          File.write(newTemplateDirPath + '/index.md', index_content)
+          subdirectory.unshift(filepath.gsub(/.md.d$/, '') + '/index.md')
+        end
       end
   
       pages.push(nav_item => subdirectory) if nav_item
