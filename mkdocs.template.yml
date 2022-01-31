@@ -8,6 +8,7 @@ theme:
     logo: fontawesome/solid/book
   features:
     - navigation.instant
+    - navigation.indexes
 site_dir: 'html'
 extra:
   social:
