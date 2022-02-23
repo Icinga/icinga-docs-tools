@@ -100,3 +100,16 @@ code, pre, kbd {
   transition: all .4s ease-in-out;
 }
 
+.icinga-legal {
+  color: #fff!important;
+}
+
+.icinga-legal button {
+  color: #fff!important;
+  cursor: pointer;
+}
+
+.icinga-legal a{
+  color: #fff!important;
+  padding-left: 20px;
+}

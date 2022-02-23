@@ -24,9 +24,7 @@ extra:
     - icon: 'fontawesome/brands/linkedin'
       link: 'https://www.linkedin.com/company/icinga'
       name: 'Icinga on LinkedIn'
-  analytics:
-    provider: google
-    property: G-MXKM9GT293
+  generator: false
 plugins:
   - search:
       lang: en
@@ -44,7 +42,6 @@ markdown_extensions:
       permalink: true
   - pymdownx.tabbed:
       alternate_style: true
-
-copyright: '© 2009 - 2022 Icinga GmbH'
+copyright: '© 2022 Icinga GmbH <div class="icinga-legal"><button data-cc="c-settings" class="cc-link">Cookie Settings</button> <a href="https://icinga.com/privacy">Privacy</a> <a href="https://icinga.com/imprint">Imprint</a></div>'
 repo_name: 'View on GitHub'
 edit_uri: ''

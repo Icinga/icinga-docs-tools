@@ -1,5 +1,17 @@
 {% extends "base.html" %}
 
+{% block analytics %}
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script type="text/plain" data-cookiecategory="analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-MXKM9GT293"></script>
+<script type="text/plain" data-cookiecategory="analytics">
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-MXKM9GT293');
+</script>
+{% endblock %}
+
 {% block announce %}
 <div class="icinga-header">
   <div class="icinga-logo">
@@ -16,4 +28,7 @@
     </ul>
   </div>
 </div>
+
+<script defer src="{{ base_url }}/js/cookieconsent.js"></script>
+<script defer src="{{ base_url }}/js/cookieconsent-init.js"></script>
 {% endblock %}
