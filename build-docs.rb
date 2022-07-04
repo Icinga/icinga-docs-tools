@@ -233,6 +233,7 @@ mkdocs['site_name'] = project_config['site_name']
 mkdocs['docs_dir'] = clone_target
 mkdocs['site_dir'] = project_config['site_dir'] + '/' + project_config['project']['target'] + '/' + version
 mkdocs['repo_url'] = project_config['project']['git'].gsub('.git', '').downcase
+mkdocs['repo_url'] = '' if project_config['repo_url'] == 'hide'
 mkdocs['nav'].push(*main_pages)
 mkdocs['nav'].push(*subproject_navigation) if subproject_navigation
 #mkdocs['extra']['events'] = get_events(config['events']['git'],
