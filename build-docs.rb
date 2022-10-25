@@ -91,8 +91,8 @@ def build_page_index(full_docs_dir, project_docs_dir)
   
       Dir.glob("#{file}/*.md", File::FNM_CASEFOLD).sort.each do |subfile|
         subfile_path = subfile.gsub(full_docs_dir + '/', project_docs_dir + '/')
-        subfile_name = subfile.match(/.*(\d+)-(.*)$/)
-
+        # Get everything after last slash
+        subfile_name = subfile.match(/([^\/]+$)/)
         if(is_template_dir)
           %x(./parse_template.py -D icingaDocs true #{full_docs_dir} #{subfile_path.gsub(/^doc\//, '')})
 
@@ -108,8 +108,17 @@ def build_page_index(full_docs_dir, project_docs_dir)
           subfile_path = subfile_path.gsub(subdir_name, subdir_name.gsub(/\.md.d$/, ''))
         end
   
-        header = titleize(subfile_name[2]) unless File.symlink?(subfile)
+        header = titleize(subfile_name[1]) unless File.symlink?(subfile)
         subdirectory.push(header => subfile_path) if header
+      end
+
+      # Sort the "From Source" installation guide explicitly to the end
+      subdirectory.each_with_index do |subdirectory_element, index|
+        if subdirectory_element.key?("From Source")
+          subdirectory.append(subdirectory_element)
+          subdirectory.delete_at(index)
+          break
+        end
       end
 
       if(is_template_dir)
