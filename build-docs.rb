@@ -35,7 +35,7 @@ OptionParser.new { |opts|
   end
 }.parse!
 
-def cleanup_and_clone(target, clone_target, git, ref)
+def cleanup_and_clone(clone_target, git, ref, inject_central_docs = false)
   @git_options = "-b #{ref}" if ref =~ /tags/
   if !File.directory?(clone_target)
     puts "Cloning #{git} to #{clone_target} ..."
@@ -44,10 +44,19 @@ def cleanup_and_clone(target, clone_target, git, ref)
 
     puts "Checking out #{ref}"
     %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} checkout #{ref} #{@git_options})
+
+    if inject_central_docs 
+      puts "Inject Central Docs"
+      %x(git config --global user.email "info@icinga.com")
+      %x(git config --global user.name "Icinga Docs Tool")
+      %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} remote add -f package-installation-docs https://github.com/Icinga/package-installation-docs.git)
+      %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} merge --squash --allow-unrelated-histories -s subtree -Xsubtree="doc/02-Installation.md.d" package-installation-docs/main)
+      %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} commit -m "Merge package installation docs")
+    end
   else
     puts "Cleaning up #{clone_target}"
     FileUtils::rm_rf(clone_target)
-    cleanup_and_clone(target, clone_target, git, ref)
+    cleanup_and_clone(clone_target, git, ref, inject_central_docs)
   end
 end
 
@@ -74,7 +83,7 @@ def titleize(string)
   return title
 end
 
-def build_page_index(full_docs_dir, project_docs_dir)
+def build_page_index(full_docs_dir, project_docs_dir, package = "", product = "")
   pages = []
   puts "Building page index from #{full_docs_dir}"
 
@@ -94,7 +103,7 @@ def build_page_index(full_docs_dir, project_docs_dir)
         # Get everything after last slash
         subfile_name = subfile.match(/([^\/]+$)/)
         if(is_template_dir)
-          %x(./parse_template.py -D icingaDocs true #{full_docs_dir} #{subfile_path.gsub(/^doc\//, '')})
+          %x(./parse_template.py -D product "#{product}" -D package "#{package}" -D icingaDocs true "#{full_docs_dir}" "#{subfile_path.gsub(/^doc\//, '')}")
 
           content = File.read(subfile)
           # Adjust self references
@@ -204,15 +213,16 @@ version = if project_config['project']['latest']
 source_dir = project_config['source_dir'] + '/' + project_config['project']['target']
 clone_target = source_dir + '/' + version
 full_docs_dir = clone_target + '/' + project_config['project']['docs_dir']
+inject_central_docs = project_config['inject_central_docs']
 
 if !options[:skip_clone]
-  cleanup_and_clone(project_config['project']['target'],
-                    clone_target,
+  cleanup_and_clone(clone_target,
                     project_config['project']['git'],
-                    project_config['project']['ref'])
+                    project_config['project']['ref'],
+                    inject_central_docs)
 end
 
-main_pages = build_page_index(full_docs_dir, project_config['project']['docs_dir'])
+main_pages = build_page_index(full_docs_dir, project_config['project']['docs_dir'], project_config['project']['package'], project_config['project']['product'])
 # MKdocs allows only 'index.md' as homepage. This is a dirty workaround to use the first markdown file instead
 #FileUtils.ln_s("#{clone_target}/#{main_pages[0].values[0]}", "#{clone_target}/index.md", :force => true)
 index_file = "#{clone_target}/index.md"
@@ -231,7 +241,7 @@ if project_config['project']['subprojects']
 
     if subproject[1]['git']
       subproject_clone_target = clone_target + '/' + subproject[1]['target']
-      cleanup_and_clone(subproject[1], subproject_clone_target, subproject[1]['git'], subproject[1]['ref'])
+      cleanup_and_clone(subproject_clone_target, subproject[1]['git'], subproject[1]['ref'])
     end
 
     subproject_navigation.push(subproject[0] => build_page_index(clone_target + '/' + subproject[1]['docs_dir'], subproject[1]['docs_dir']))
