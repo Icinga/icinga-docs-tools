@@ -42,6 +42,6 @@ markdown_extensions:
       permalink: true
   - pymdownx.tabbed:
       alternate_style: true
-copyright: '© 2022 Icinga GmbH <div class="icinga-legal"><button data-cc="c-settings" class="cc-link">Cookie Settings</button> <a href="https://icinga.com/privacy">Privacy</a> <a href="https://icinga.com/imprint">Imprint</a></div>'
+copyright: '© 2023 Icinga GmbH <div class="icinga-legal"><button data-cc="c-settings" class="cc-link">Cookie Settings</button> <a href="https://icinga.com/privacy">Privacy</a> <a href="https://icinga.com/imprint">Imprint</a></div>'
 repo_name: 'View on GitHub'
 edit_uri: ''
