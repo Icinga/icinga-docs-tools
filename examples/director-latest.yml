@@ -2,12 +2,15 @@
 site_name: 'Icinga Director'
 source_dir: '/var/www/docs/source'
 site_dir: '/var/www/docs/html'
+inject_central_docs: true
 project:
   git: 'https://github.com/Icinga/icingaweb2-module-director.git'
-  ref: 'support/1.7'
+  ref: 'master'
   target: 'icinga-director'
   docs_dir: 'doc'
   latest: true
+  product: 'Icinga Director'
+  package: 'icinga-director'
   subprojects:
     PuppetDB Import:
       git: 'https://github.com/Icinga/icingaweb2-module-puppetdb.git'

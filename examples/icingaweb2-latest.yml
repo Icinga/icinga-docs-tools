@@ -1,11 +1,11 @@
 ---
-site_name: 'Icinga Web 2'
+site_name: 'Icinga Web'
 source_dir: '/var/www/docs/source'
 site_dir: '/var/www/docs/html'
 project:
   git: 'https://github.com/Icinga/icingaweb2.git'
   ref: 'master'
-  target: 'icinga-web-2'
+  target: 'icinga-web'
   docs_dir: 'doc'
   latest: true
   subprojects:
