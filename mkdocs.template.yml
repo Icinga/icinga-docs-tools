@@ -28,6 +28,10 @@ extra:
 plugins:
   - search:
       lang: en
+  - exclude-search:
+      exclude:
+        - library/*
+        - vendor/*
 extra_javascript: []
 extra_css:
   - css/theme.css
