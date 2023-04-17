@@ -261,3 +261,9 @@ mkdocs['nav'].push(*subproject_navigation) if subproject_navigation
 
 File.write('mkdocs.yml', mkdocs.to_yaml)
 %x(mkdocs build)
+
+Dir.chdir(mkdocs['site_dir'])
+
+Dir.glob('**/*.png').each do|f|
+  system("optipng #{f}") or exit!
+end
