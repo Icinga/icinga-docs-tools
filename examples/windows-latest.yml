@@ -4,26 +4,31 @@ source_dir: '/var/www/docs/source'
 site_dir: '/var/www/docs/html'
 project:
   git: 'https://github.com/Icinga/icinga-powershell-framework.git'
-  ref: 'support/1.2'
+  ref: 'support/1.10'
   target: 'icinga-for-windows'
   docs_dir: 'doc'
   latest: true
   subprojects:
-    Kickstart:
-      git: 'https://github.com/Icinga/icinga-powershell-kickstart.git'
-      ref: 'master'
-      target: 'kickstart'
-      docs_dir: 'kickstart/doc'
     Basic Plugins:
       git: 'https://github.com/Icinga/icinga-powershell-plugins.git'
-      ref: 'support/1.2'
+      ref: 'support/1.10'
       target: 'plugins'
       docs_dir: 'plugins/doc'
     MSSQL Plugins:
       git: 'https://github.com/Icinga/icinga-powershell-mssql.git'
-      ref: 'support/1.0'
+      ref: 'support/1.4'
       target: 'mssql'
       docs_dir: 'mssql/doc'
+    Hyper-V Plugins:
+      git: 'https://github.com/Icinga/icinga-powershell-hyperv.git'
+      ref: 'support/1.2'
+      target: 'hyperv'
+      docs_dir: 'hyperv/doc'
+    Cluster Plugins:
+      git: 'https://github.com/Icinga/icinga-powershell-cluster.git'
+      ref: 'support/1.2'
+      target: 'cluster'
+      docs_dir: 'cluster/doc'
     Service:
       git: 'https://github.com/Icinga/icinga-powershell-service.git'
       ref: 'master'
@@ -31,11 +36,16 @@ project:
       docs_dir: 'service/doc'
     Inventory:
       git: 'https://github.com/Icinga/icinga-powershell-inventory.git'
-      ref: 'support/1.0'
+      ref: 'support/1.2'
       target: 'inventory'
       docs_dir: 'inventory/doc'
     REST API:
       git: 'https://github.com/Icinga/icinga-powershell-restapi.git'
-      ref: 'support/1.0'
+      ref: 'support/1.2'
       target: 'restapi'
       docs_dir: 'restapi/doc'
+    API Checks:
+      git: 'https://github.com/Icinga/icinga-powershell-apichecks.git'
+      ref: 'support/1.2'
+      target: 'apichecks'
+      docs_dir: 'apichecks/doc'
