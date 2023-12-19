@@ -114,3 +114,7 @@ code, pre, kbd {
   color: #fff!important;
   padding-left: 20px;
 }
+
+#icinga-summit a {
+  color: #e0009d;
+}
