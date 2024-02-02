@@ -203,7 +203,7 @@ puts "== #{project_config['site_name']}"
 
 version = if project_config['project']['latest']
             'latest'
-          elsif project_config['project']['ref'] == 'master'
+          elsif project_config['project']['ref'] == 'master' or project_config['project']['ref'] == 'main'
             'snapshot'
           else
             project_config['project']['ref'].gsub('tags/', '')
