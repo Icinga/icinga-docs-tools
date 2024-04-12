@@ -118,3 +118,8 @@ code, pre, kbd {
 #icinga-summit a {
   color: #e0009d;
 }
+
+.registered-sign {
+  vertical-align: top;
+  font-size: small;
+}
