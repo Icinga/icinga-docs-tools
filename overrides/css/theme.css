@@ -123,3 +123,7 @@ code, pre, kbd {
   vertical-align: top;
   font-size: small;
 }
+
+.md-typeset .admonition {
+  font-size: .72rem;
+}
