@@ -264,6 +264,6 @@ File.write('mkdocs.yml', mkdocs.to_yaml)
 
 Dir.chdir(mkdocs['site_dir'])
 
-Dir.glob('**/*.png').each do|f|
-  system("optipng #{f}") or exit!
-end
+#Dir.glob('**/*.png').each do|f|
+#  system("optipng #{f}") or exit!
+#end

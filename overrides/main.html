@@ -30,6 +30,58 @@
   </div>
 </div>
 
+<script type="text/javascript" src="{{ base_url }}/js/jquery-3.7.1.min.js"></script>
+<div id="popup-window">
+  <button id="close-button">&#x2715;</button>
+  <a href="https://icinga.com/summit"><div id="popup-link"></div></a>
+</div>
+<script>
+  // Get the elements by their ID
+  var popupWindow = document.getElementById("popup-window");
+  var closeButton = document.getElementById("close-button");
+  // Hide the pop-up window when the close button is clicked
+  closeButton.addEventListener("click", function() {
+    popupWindow.style.display = "none";
+  });
+
+  $(document).ready(function() {
+    $('#popup-window').delay(3000).animate({'margin-right':'0px'},1000);
+  });
+</script>
+
+<style>
+#popup-window {
+  position: fixed;
+  width: 500px;
+  height: 260px;
+  background-image: url("{{ base_url }}/assets/images/icinga-summit-bg.png");
+  padding: 10px;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: block;
+  margin-right: -500px;
+}
+#popup-link {
+  display: block;
+  height: 100%;
+  width: 470px;
+  cursor: pointer;
+}
+#close-button {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  background: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
+  color: black;
+  font-weight: bold;
+  font-size: 26px;
+}
+</style>
+
 <script defer src="{{ base_url }}/js/cookieconsent.js"></script>
 <script defer src="{{ base_url }}/js/registered-sign.js"></script>
 <script>
