@@ -45,7 +45,10 @@
   });
 
   $(document).ready(function() {
-    $('#popup-window').delay(3000).animate({'margin-right':'0px'},1000);
+    if (sessionStorage.getItem("animationDone") != "done") {
+      $('#popup-window').delay(3000).animate({'margin-right':'0px'},1000);
+	  sessionStorage.setItem("animationDone", "done");
+	}
   });
 </script>
 
