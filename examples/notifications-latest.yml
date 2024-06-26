@@ -1,0 +1,14 @@
+---
+site_name: 'Icinga Notifications'
+source_dir: '/var/www/docs/source'
+site_dir: '/var/www/docs/html'
+inject_central_docs: true
+project:
+  git: 'https://github.com/Icinga/icinga-notifications.git'
+  # TODO: move ref to main after https://github.com/Icinga/icinga-notifications/pull/210 got merged.
+  ref: 'docs-init'
+  target: 'icinga-notifications'
+  docs_dir: 'doc'
+  latest: true
+  product: 'Icinga Notifications'
+  package: 'icinga-notifications'
