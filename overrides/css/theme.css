@@ -127,3 +127,11 @@ code, pre, kbd {
 .md-typeset .admonition {
   font-size: .72rem;
 }
+
+.md-nav__link {
+  justify-content: flex-start;
+}
+
+.md-nav__link span.registered-sign {
+  padding-right: 5px;
+}
