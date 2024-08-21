@@ -1,0 +1,10 @@
+---
+site_name: 'Get started with Icinga'
+source_dir: '/var/www/docs/source'
+site_dir: '/var/www/docs/html'
+project:
+  git: 'https://github.com/Icinga/get-started-docs.git'
+  ref: 'main'
+  target: 'get-started'
+  docs_dir: 'doc'
+  latest: true
