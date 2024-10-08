@@ -5,7 +5,7 @@ site_dir: '/var/www/docs/html'
 inject_central_docs: true # include installation docs from `package-installation-docs`
 project:
   git: 'https://github.com/Icinga/icinga-notifications-web.git'
-  ref: 'feature/add-documentation' # TODO(nc): change to main once https://github.com/Icinga/icinga-notifications-web/pull/218 gets merged
+  ref: 'master'
   target: 'icinga-notifications-web'
   docs_dir: 'doc'
   latest: true
