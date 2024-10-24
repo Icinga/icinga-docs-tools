@@ -103,7 +103,15 @@ def build_page_index(full_docs_dir, project_docs_dir, package = "", product = ""
         # Get everything after last slash
         subfile_name = subfile.match(/([^\/]+$)/)
         if(is_template_dir)
-          %x(./parse_template.py -D product "#{product}" -D package "#{package}" -D icingaDocs true "#{full_docs_dir}" "#{subfile_path.gsub(/^doc\//, '')}")
+          subdir_name = File.basename(file)
+          new_subdir_name = subdir_name.gsub(/\.md.d$/, '')
+
+          subdir = file.gsub(subdir_name, new_subdir_name)
+          FileUtils.mkdir_p(subdir) unless File.directory?(subdir)
+
+          subfile = subfile.gsub(subdir_name, new_subdir_name)
+
+          %x(./parse_template.py -o "#{subfile}" -D product "#{product}" -D package "#{package}" -D icingaDocs true "#{full_docs_dir}" "#{subfile_path.gsub(/^doc\//, '')}")
 
           content = File.read(subfile)
           # Adjust self references
@@ -112,9 +120,7 @@ def build_page_index(full_docs_dir, project_docs_dir, package = "", product = ""
           content = content.gsub(/\[(.*)\]\((?!http|#)(.*)\)/, '[\1](../\2)')
           File.write(subfile, content)
 
-          # Adjust path, the directory will be renamed soon
-          subdir_name = File.basename(file)
-          subfile_path = subfile_path.gsub(subdir_name, subdir_name.gsub(/\.md.d$/, ''))
+          subfile_path = subfile_path.gsub(subdir_name, new_subdir_name)
         end
   
         header = titleize(subfile_name[1]) unless File.symlink?(subfile)
@@ -138,7 +144,7 @@ def build_page_index(full_docs_dir, project_docs_dir, package = "", product = ""
 
         # Rename template directory to mimic template references
         newTemplateDirPath = file.gsub(/\.md.d$/, '')
-        File.rename(file, newTemplateDirPath)
+        FileUtils.rm_r(file)
 
         # Attempt to create a index file
         index_content = %x(./parse_template.py -o - -D index true #{full_docs_dir} #{template_path.gsub(/^doc\//, '')})
