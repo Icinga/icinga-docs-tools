@@ -45,7 +45,7 @@ def cleanup_and_clone(clone_target, git, ref, inject_central_docs = false)
     puts "Checking out #{ref}"
     %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} checkout #{ref} #{@git_options})
 
-    if inject_central_docs 
+    if inject_central_docs
       puts "Inject Central Docs"
       %x(git config --global user.email "info@icinga.com")
       %x(git config --global user.name "Icinga Docs Tool")
@@ -97,13 +97,21 @@ def build_page_index(full_docs_dir, project_docs_dir, package = "", product = ""
       subdirectory = []
       nav_item = titleize(filename[2]) unless File.symlink?(filepath)
       is_template_dir = !filename[3].nil?
-  
+
       Dir.glob("#{file}/*.md", File::FNM_CASEFOLD).sort.each do |subfile|
         subfile_path = subfile.gsub(full_docs_dir + '/', project_docs_dir + '/')
         # Get everything after last slash
         subfile_name = subfile.match(/([^\/]+$)/)
         if(is_template_dir)
-          %x(./parse_template.py -D product "#{product}" -D package "#{package}" -D icingaDocs true "#{full_docs_dir}" "#{subfile_path.gsub(/^doc\//, '')}")
+          subdir_name = File.basename(file)
+          new_subdir_name = subdir_name.gsub(/\.md.d$/, '')
+
+          subdir = file.gsub(subdir_name, new_subdir_name)
+          FileUtils.mkdir_p(subdir) unless File.directory?(subdir)
+
+          subfile = subfile.gsub(subdir_name, new_subdir_name)
+
+          %x(./parse_template.py -o "#{subfile}" -D product "#{product}" -D package "#{package}" -D icingaDocs true "#{full_docs_dir}" "#{subfile_path.gsub(/^doc\//, '')}")
 
           content = File.read(subfile)
           # Adjust self references
@@ -112,11 +120,9 @@ def build_page_index(full_docs_dir, project_docs_dir, package = "", product = ""
           content = content.gsub(/\[(.*)\]\((?!http|#)(.*)\)/, '[\1](../\2)')
           File.write(subfile, content)
 
-          # Adjust path, the directory will be renamed soon
-          subdir_name = File.basename(file)
-          subfile_path = subfile_path.gsub(subdir_name, subdir_name.gsub(/\.md.d$/, ''))
+          subfile_path = subfile_path.gsub(subdir_name, new_subdir_name)
         end
-  
+
         header = titleize(subfile_name[1]) unless File.symlink?(subfile)
         subdirectory.push(header => subfile_path) if header
       end
@@ -138,7 +144,7 @@ def build_page_index(full_docs_dir, project_docs_dir, package = "", product = ""
 
         # Rename template directory to mimic template references
         newTemplateDirPath = file.gsub(/\.md.d$/, '')
-        File.rename(file, newTemplateDirPath)
+        FileUtils.rm_r(file)
 
         # Attempt to create a index file
         index_content = %x(./parse_template.py -o - -D index true #{full_docs_dir} #{template_path.gsub(/^doc\//, '')})
@@ -152,9 +158,9 @@ def build_page_index(full_docs_dir, project_docs_dir, package = "", product = ""
           subdirectory.unshift(filepath.gsub(/.md.d$/, '') + '/index.md')
         end
       end
-  
+
       pages.push(nav_item => subdirectory) if nav_item
-    else  
+    else
       header = titleize(filename[2]) unless File.symlink?(filepath)
       pages.push(header => filepath) if header
     end
