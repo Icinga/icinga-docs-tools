@@ -13,9 +13,6 @@ theme:
 site_dir: 'html'
 extra:
   social:
-    - icon: 'fontawesome/brands/twitter'
-      link: 'https://twitter.com/icinga'
-      name: 'Icinga on Twitter'
     - icon: 'fontawesome/brands/facebook'
       link: 'https://www.facebook.com/icinga'
       name: 'Icinga on Facebook'
