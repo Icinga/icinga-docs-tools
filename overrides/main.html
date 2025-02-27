@@ -10,6 +10,12 @@
 
   gtag('config', 'G-MXKM9GT293');
 </script>
+
+<!-- START Formbricks Surveys -->
+<script type="text/javascript">
+!function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://survey.icinga.com/js/formbricks.umd.cjs";var e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(t,e),setTimeout(function(){window.formbricks.init({environmentId: "cm2ukn8tw000899969w33y4rn", apiHost: "https://survey.icinga.com"})},500)}();
+</script>
+<!-- END Formbricks Surveys -->
 {% endblock %}
 
 {% block announce %}
@@ -35,12 +41,11 @@
   <button id="close-button">&#x2715;</button>
   <a target="_blank" href="https://survey.icinga.com/s/isu6flzyvjk8uvy1hiezc56u?source=icingadocs"><div id="popup-link"></div></a>
 </div>
--->
+
 <script>
-  // Get the elements by their ID
+  // Hide the pop-up window when the close button is clicked
   var popupWindow = document.getElementById("popup-window");
   var closeButton = document.getElementById("close-button");
-  // Hide the pop-up window when the close button is clicked
   closeButton.addEventListener("click", function() {
     popupWindow.style.display = "none";
   });
@@ -52,7 +57,7 @@
 	}
   });
 </script>
-
+-->
 <style>
 #popup-window {
   position: fixed;
