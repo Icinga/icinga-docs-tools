@@ -127,12 +127,15 @@ def build_page_index(full_docs_dir, project_docs_dir, package = "", product = ""
         subdirectory.push(header => subfile_path) if header
       end
 
-      # Sort the "From Source" installation guide explicitly to the end
-      subdirectory.each_with_index do |subdirectory_element, index|
-        if subdirectory_element.key?("From Source")
-          subdirectory.append(subdirectory_element)
-          subdirectory.delete_at(index)
-          break
+      # Sort the "For Container" and "From Source" installation sections
+      # explicitly to the end. "For Container" precedes "From Source".
+      ["For Container", "From Source"].each do |section_name|
+        subdirectory.each_with_index do |subdirectory_element, index|
+          if subdirectory_element.key?(section_name)
+            subdirectory.append(subdirectory_element)
+            subdirectory.delete_at(index)
+            break
+          end
         end
       end
 
