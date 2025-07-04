@@ -50,7 +50,7 @@ def cleanup_and_clone(clone_target, git, ref, inject_central_docs = false)
       %x(git config --global user.email "info@icinga.com")
       %x(git config --global user.name "Icinga Docs Tool")
       %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} remote add -f package-installation-docs https://github.com/Icinga/package-installation-docs.git)
-      %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} merge --squash --allow-unrelated-histories -s subtree -Xsubtree="doc/02-Installation.md.d" package-installation-docs/subscription-docs)
+      %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} merge --squash --allow-unrelated-histories -s subtree -Xsubtree="doc/02-Installation.md.d" package-installation-docs/main)
       %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} commit -m "Merge package installation docs")
     end
   else
