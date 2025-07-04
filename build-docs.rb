@@ -50,7 +50,7 @@ def cleanup_and_clone(clone_target, git, ref, inject_central_docs = false)
       %x(git config --global user.email "info@icinga.com")
       %x(git config --global user.name "Icinga Docs Tool")
       %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} remote add -f package-installation-docs https://github.com/Icinga/package-installation-docs.git)
-      %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} merge --squash --allow-unrelated-histories -s subtree -Xsubtree="doc/02-Installation.md.d" package-installation-docs/main)
+      %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} merge --squash --allow-unrelated-histories -s subtree -Xsubtree="doc/02-Installation.md.d" package-installation-docs/subscription-docs)
       %x(git --git-dir=#{clone_target}/.git --work-tree=#{clone_target} commit -m "Merge package installation docs")
     end
   else
@@ -83,7 +83,7 @@ def titleize(string)
   return title
 end
 
-def build_page_index(full_docs_dir, project_docs_dir, package = "", product = "")
+def build_page_index(full_docs_dir, project_docs_dir, package = "", product = "", subscription_product = false, repo_file_identifier = "", package_repo_url = "")
   pages = []
   puts "Building page index from #{full_docs_dir}"
 
@@ -111,7 +111,7 @@ def build_page_index(full_docs_dir, project_docs_dir, package = "", product = ""
 
           subfile = subfile.gsub(subdir_name, new_subdir_name)
 
-          %x(./parse_template.py -o "#{subfile}" -D product "#{product}" -D package "#{package}" -D icingaDocs true "#{full_docs_dir}" "#{subfile_path.gsub(/^doc\//, '')}")
+          %x(./parse_template.py -o "#{subfile}" -D product "#{product}" -D package "#{package}" -D icingaDocs true -D subscription_product "#{subscription_product}" -D repo_file_identifier "#{repo_file_identifier}" -D package_repo_url "#{package_repo_url}" "#{full_docs_dir}" "#{subfile_path.gsub(/^doc\//, '')}")
 
           content = File.read(subfile)
           # Adjust self references
@@ -231,7 +231,11 @@ if !options[:skip_clone]
                     inject_central_docs)
 end
 
-main_pages = build_page_index(full_docs_dir, project_config['project']['docs_dir'], project_config['project']['package'], project_config['project']['product'])
+project_config['project']['subscription_product'] = false unless project_config['project'].key?('subscription_product')
+project_config['project']['repo_file_identifier'] = "release" unless project_config['project'].key?('repo_file_identifier')
+project_config['project']['package_repo_url'] = "" unless project_config['project'].key?('package_repo_url')
+
+main_pages = build_page_index(full_docs_dir, project_config['project']['docs_dir'], project_config['project']['package'], project_config['project']['product'], project_config['project']['subscription_product'], project_config['project']['repo_file_identifier'], project_config['project']['package_repo_url'])
 # MKdocs allows only 'index.md' as homepage. This is a dirty workaround to use the first markdown file instead
 #FileUtils.ln_s("#{clone_target}/#{main_pages[0].values[0]}", "#{clone_target}/index.md", :force => true)
 index_file = "#{clone_target}/index.md"
