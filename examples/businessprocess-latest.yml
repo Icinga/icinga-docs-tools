@@ -1,10 +1,13 @@
 ---
-site_name: 'Business Process Modelling'
+site_name: 'Business Process Modeling'
 source_dir: '/var/www/docs/source'
 site_dir: '/var/www/docs/html'
+inject_central_docs: true
 project:
   git: 'https://github.com/Icinga/icingaweb2-module-businessprocess.git'
-  ref: 'tags/v2.3.0'
-  target: 'icinga-businessprocess-modelling'
+  ref: 'tags/v2.5.1'
+  target: 'icinga-business-process-modeling'
   docs_dir: 'doc'
   latest: true
+  product: 'Icinga Business Process Modeling'
+  package: 'icinga-businessprocess'
