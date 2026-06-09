@@ -2,12 +2,15 @@
 site_name: 'Icinga Web'
 source_dir: '/var/www/docs/source'
 site_dir: '/var/www/docs/html'
+inject_central_docs: true
 project:
   git: 'https://github.com/Icinga/icingaweb2.git'
-  ref: 'master'
+  ref: 'main'
   target: 'icinga-web'
   docs_dir: 'doc'
   latest: true
+  product: 'Icinga Web 2'
+  package: 'icingaweb2'
   subprojects:
     Monitoring:
       docs_dir: 'modules/monitoring/doc'
