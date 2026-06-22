@@ -5,7 +5,7 @@ site_dir: '/var/www/docs/html'
 inject_central_docs: true
 project:
   git: 'https://github.com/Icinga/icingaweb2.git'
-  ref: 'main'
+  ref: 'icingaweb2-centralized-docs'
   target: 'icinga-web'
   docs_dir: 'doc'
   latest: true
