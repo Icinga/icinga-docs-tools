@@ -9,7 +9,7 @@ project:
   target: 'icinga-web'
   docs_dir: 'doc'
   latest: true
-  product: 'Icinga Web 2'
+  product: 'Icinga Web'
   package: 'icingaweb2'
   subprojects:
     Monitoring:
