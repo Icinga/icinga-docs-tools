@@ -82,6 +82,36 @@ project:
 This file is used as a template for the final `mkdocs.yml`. Default settings and some other configuration options are
 here.
 
+#### Promo Bar
+
+The yellow promo bar known from icinga.com is rendered on top of every documentation page. Its design is fixed in
+`overrides/css/theme.css`; only whether it is shown and what it says are configured here:
+
+``` yaml
+extra:
+  promobar:
+    enabled: true
+    text: '2FA, single sign-on, password policies and role restrictions in Icinga - join the hands-on webinar on September 23!'
+    link:
+      url: 'https://icinga.com/webinars/security-in-icinga-web/?atm_source=promobar'
+      text: 'Register Now 🚀'
+```
+
+| Option       | Description                                                                          |
+| ------------ | ------------------------------------------------------------------------------------ |
+| `enabled`    | Set to `false` to hide the bar. The markup is then omitted entirely.                  |
+| `text`       | The message. May contain inline HTML.                                                 |
+| `link`       | Optional call to action, rendered after `text`. Omit it for a text-only bar.          |
+| `link.url`   | Target of the call to action.                                                         |
+| `link.text`  | Label of the call to action.                                                          |
+
+The bar is baked into the generated HTML, so **the documentation has to be rebuilt** for a change to `enabled` or
+`text` to become visible.
+
+Readers can dismiss the bar with the `✕` button. This is remembered in the browser's local storage under
+`promoBarClosed`, and the key does not depend on the content: someone who dismissed one campaign will not see the
+next one either.
+
 ### Run Development Server
 To see a live preview of the documentation you can run a development server that will refresh automatically on changes.
 

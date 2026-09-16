@@ -13,6 +13,12 @@ theme:
     - content.code.copy
 site_dir: 'html'
 extra:
+  promobar:
+    enabled: true
+    text: '2FA, single sign-on, password policies and role restrictions in Icinga - join the hands-on webinar on September 23!'
+    link:
+      url: 'https://icinga.com/webinars/security-in-icinga-web/?atm_source=promobar'
+      text: 'Register Now 🚀'
   social:
     - icon: 'fontawesome/brands/facebook'
       link: 'https://www.facebook.com/icinga'

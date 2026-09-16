@@ -1,6 +1,8 @@
 :root {
   --md-primary-fg-color: #06062C;
   --md-accent-fg-color: #0095bf;
+  --icinga-promobar-bg: #EDF000;
+  --icinga-promobar-accent: #E0009D;
 }
 
 :root > * {
@@ -48,8 +50,64 @@ code, pre, kbd {
   color: #fff;
 }
 
+/* The announce block holds both the promo bar and the navbar. Material centres and caps its
+   content at 61rem, so move the wrapper's vertical margin onto the navbar and let the promo
+   bar break out to the full viewport width. */
+.md-banner {
+  overflow: hidden;
+}
+
+.md-banner__inner {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.icinga-promobar {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background-color: var(--icinga-promobar-bg);
+  color: #06062C;
+}
+
+.icinga-promobar-inner {
+  max-width: 61rem;
+  margin: 0 auto;
+  padding: 5px .8rem;
+  display: flex;
+  align-items: center;
+  gap: .8rem;
+}
+
+.icinga-promobar-text {
+  /* Absolute, like on icinga.com: material scales the rem base with the viewport
+     (125% -> 137.5% -> 150%), so a rem value here would grow on wide screens. */
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.icinga-promobar a {
+  color: var(--icinga-promobar-accent);
+  display: inline-block;
+}
+
+#icinga-close-bar {
+  margin-left: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--icinga-promobar-accent);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.promobar-closed .icinga-promobar {
+  display: none;
+}
+
 .icinga-header {
   height: 2rem;
+  margin: .6rem 0;
 }
 
 .icinga-logo img {

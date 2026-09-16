@@ -18,7 +18,37 @@
 <!-- END Formbricks Surveys -->
 {% endblock %}
 
+{% block extrahead %}
+<script>
+  // Promo Bar: hide before first paint if it was dismissed earlier. The class goes on
+  // <html> because material replaces [data-md-component=announce] on instant navigation.
+  if (localStorage.getItem('promoBarClosed') === 'true') {
+    document.documentElement.classList.add('promobar-closed');
+  }
+  // Delegated for the same reason: the close button is re-created on every navigation.
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('#icinga-close-bar')) {
+      localStorage.setItem('promoBarClosed', 'true');
+      document.documentElement.classList.add('promobar-closed');
+    }
+  });
+</script>
+{% endblock %}
+
 {% block announce %}
+{% if config.extra.promobar and config.extra.promobar.enabled %}
+<div class="icinga-promobar">
+  <div class="icinga-promobar-inner">
+    <span class="icinga-promobar-text">
+      {{ config.extra.promobar.text }}
+      {% if config.extra.promobar.link %}
+      <a href="{{ config.extra.promobar.link.url }}">{{ config.extra.promobar.link.text }}</a>
+      {% endif %}
+    </span>
+    <button type="button" id="icinga-close-bar" aria-label="Dismiss announcement">&#x2715;</button>
+  </div>
+</div>
+{% endif %}
 <div class="icinga-header">
   <div class="icinga-logo">
     <a href="https://icinga.com"><img src="{{ base_url }}/assets/images/icinga-logo-white.png"/></a>
